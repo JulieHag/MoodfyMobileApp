@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MoodApp</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_mood_library">Mood Library</string>
+    <string name="title_mood_boost">Mood Boost</string>
+    <string name="title_mood_music">Mood Music</string>
+    <string name="title_mood_music_btn">Start Moodfying your music</string>
+    <string name="title_mood_music_btn_stop">Stop Moodfying your music</string>
+</resources>
