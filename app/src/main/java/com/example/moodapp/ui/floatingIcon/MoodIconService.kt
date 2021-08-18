@@ -9,7 +9,6 @@ import android.os.IBinder
 import android.view.*
 import android.widget.ImageView
 import android.widget.Toast
-import com.example.moodapp.MainActivity
 import com.example.moodapp.R
 
 
@@ -21,6 +20,8 @@ class MoodIconService : Service() {
     //private lateinit var moodOverlayBtn: ImageButton
     private lateinit var params: WindowManager.LayoutParams
     private lateinit var floatingView: View
+
+
 
 
     override fun onCreate() {
@@ -67,55 +68,72 @@ class MoodIconService : Service() {
         val closeButtonCollapsed = floatingView.findViewById(R.id.close_btn) as ImageView
         closeButtonCollapsed.setOnClickListener { stopSelf() }
 
-        floatingView.findViewById<View>(R.id.mf_icon)
-            .setOnTouchListener(object : View.OnTouchListener {
-
-                private var initialX = 0
-                private var initialY = 0
-                private var initialTouchX = 0.0f
-                private var initialTouchY = 0.0f
-                var intent: Intent? = null
 
 
+        val showMfIcon = floatingView.findViewById<View>(R.id.mf_icon_container)
 
-                override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                    when (event!!.action) {
-                        MotionEvent.ACTION_DOWN -> {
-                            initialX = params.x
-                            initialY = params.y
-                            initialTouchX = event.rawX
-                            initialTouchY = event.rawY
-                            return true
-                        }
-                        MotionEvent.ACTION_UP -> {
-                           var xDiff = (event.rawX - initialTouchX).toInt()
-                            var yDiff = (event.rawY - initialTouchY).toInt()
 
-                            //Click event, must check  for Xdiff<10 && Ydiff<10 as sometimes the icon may move a little when clicking
-                            if(xDiff<10 && yDiff<10){
-                               intent = Intent(applicationContext, MainActivity::class.java)
-                                startActivity(intent)
-                                //This part doesn't work yet
+        showMfIcon.setOnTouchListener(object : View.OnTouchListener {
+
+
+            private var initialX = 0
+            private var initialY = 0
+            private var initialTouchX = 0.0f
+            private var initialTouchY = 0.0f
+            var intent: Intent? = null
+
+
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                when (event!!.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        initialX = params.x
+                        initialY = params.y
+                        initialTouchX = event.rawX
+                        initialTouchY = event.rawY
+                        return true
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        var xDiff = (event.rawX - initialTouchX).toInt()
+                        var yDiff = (event.rawY - initialTouchY).toInt()
+
+                        //Click event, must check  for Xdiff<10 && Ydiff<10 as sometimes the icon may move a little when clicking
+                        //Will show user the mood option tags
+
+                        if (xDiff < 10 && yDiff < 10) {
+
+                            showMoodTags()
+                            val moodTagsMinBtn =
+                                floatingView.findViewById<ImageView>(R.id.mood_tag_min_btn)
+
+                            //set onclick listener for minimise button in mood tags
+                            moodTagsMinBtn.setOnClickListener {
+                                showMfIcon()
                             }
-                        }
 
-
-                        MotionEvent.ACTION_MOVE -> {
-                            params.x = initialX + (event.rawX - initialTouchX).toInt()
-                            params.y = initialY + (event.rawY - initialTouchY).toInt()
-
-                            //update the layout with new x and y coordinates
                             windowManager.updateViewLayout(floatingView, params)
+
+
                         }
                     }
 
-                    return true
+
+                    MotionEvent.ACTION_MOVE -> {
+                        params.x = initialX + (event.rawX - initialTouchX).toInt()
+                        params.y = initialY + (event.rawY - initialTouchY).toInt()
+
+                        //update the layout with new x and y coordinates
+                        windowManager.updateViewLayout(floatingView, params)
+                    }
                 }
 
+                return true
+            }
 
-            })
+
+        })
 
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
@@ -127,12 +145,28 @@ class MoodIconService : Service() {
     }
 
 
-    /**
-    override fun onClick(v: View?) {
-    if (!moving) Toast.makeText(this, "Button touched", Toast.LENGTH_SHORT).show()
-    }**/
+
+    private fun showMfIcon() {
+        val moodTags = floatingView.findViewById<View>(R.id.mood_tags_container)
+
+        val mfIcon = floatingView.findViewById<View>(R.id.mf_icon)
+        moodTags.visibility = View.GONE
+        mfIcon.visibility = View.VISIBLE
+
+    }
+
+    private fun showMoodTags() {
+        val moodTags = floatingView.findViewById<View>(R.id.mood_tags_container)
+
+        val mfIcon = floatingView.findViewById<View>(R.id.mf_icon)
+
+        moodTags.visibility = View.VISIBLE
+        mfIcon.visibility = View.GONE
+
+    }
 
 
 }
+
 
 

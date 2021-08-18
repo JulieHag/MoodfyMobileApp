@@ -1,46 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <!--Root container-->
+    <!--Root container for both mf_icon and mood_tags-->
 
     <RelativeLayout
-        android:id="@+id/mf_icon"
+        android:id="@+id/mf_icon_container"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:ignore="UselessParent">
+        android:layout_height="wrap_content">
 
-        <!-- view while view is collapsed-->
+        <!-- Root container for mf_icon-->
         <RelativeLayout
-            android:id="@+id/collapse_view"
+            android:id="@+id/mf_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="visible"
+            tools:ignore="UselessParent">
 
-
+            <!-- view while view is collapsed-->
             <RelativeLayout
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="10dp"
-                android:background="@mipmap/ic_mf_icon">
+                android:id="@+id/collapse_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+
+                <RelativeLayout
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@mipmap/ic_mf_icon">
+
+                </RelativeLayout>
+
+                <!-- Close button -->
+                <ImageView
+                    android:id="@+id/close_btn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="54dp"
+                    android:src="@drawable/ic_baseline_close_24"
+                    tools:ignore="ContentDescription" />
+
 
             </RelativeLayout>
 
-            <!-- Close button -->
-            <ImageView
-                android:id="@+id/close_btn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="54dp"
-                android:src="@drawable/ic_baseline_close_24"
-                tools:ignore="ContentDescription"/>
-
-
         </RelativeLayout>
 
-    </RelativeLayout>
+        <!-- Mood tag root container -->
+        <RelativeLayout
+            android:id="@+id/mood_tags_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
+            <RelativeLayout
+                android:id="@+id/mood_tags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/moodbg">
+
+                <ImageButton
+                    android:id="@+id/mood_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:src="@drawable/ic_happy" />
+
+
+                <ImageButton
+                    android:id="@+id/mood_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="60dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_sad"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/mood_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_anxiety" />
+
+                <ImageButton
+                    android:id="@+id/mood_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginTop="40dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_calm" />
+
+                <ImageButton
+                    android:id="@+id/mood_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="80dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_excited" />
+
+                <ImageButton
+                    android:id="@+id/mood_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginTop="80dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_face" />
+
+
+            </RelativeLayout>
+
+            <!-- minimise button -->
+            <ImageView
+                android:id="@+id/mood_tag_min_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="100dp"
+                android:src="@drawable/ic_minimise"
+                tools:ignore="ContentDescription" />
+
+        </RelativeLayout>
+    </RelativeLayout>
 </FrameLayout>
