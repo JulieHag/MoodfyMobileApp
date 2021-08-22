@@ -31,13 +31,7 @@ class MoodIconService : Service() {
 
         windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
-        /**
-        moodOverlayBtn = ImageButton(this)
-        moodOverlayBtn.setImageResource(R.mipmap.ic_moodfloat_icon)
-        moodOverlayBtn.setBackgroundResource(0)
-        moodOverlayBtn.setOnTouchListener(this)
-        moodOverlayBtn.setOnClickListener(this)
-         **/
+
         //inflate floating view
         floatingView = LayoutInflater.from(this).inflate(R.layout.service_mood_overlay, null)
 
