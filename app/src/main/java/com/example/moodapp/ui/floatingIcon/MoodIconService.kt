@@ -7,17 +7,18 @@ import android.graphics.PixelFormat
 import android.os.Build
 import android.os.IBinder
 import android.view.*
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import com.example.moodapp.R
 
-
+/**
+ * Code for floating icon funtionality is adapted from https://drive.google.com/file/d/1fY9r9uNZ9JYcbFWInI3ivmOyZEsMURG_/view
+ */
 class MoodIconService : Service() {
 
 
     private lateinit var windowManager: WindowManager
-
-    //private lateinit var moodOverlayBtn: ImageButton
     private lateinit var params: WindowManager.LayoutParams
     private lateinit var floatingView: View
 
@@ -139,7 +140,9 @@ class MoodIconService : Service() {
     }
 
 
-
+    /**
+     * Show moodfy icon and hide the moodtags
+     */
     private fun showMfIcon() {
         val moodTags = floatingView.findViewById<View>(R.id.mood_tags_container)
 
@@ -149,6 +152,9 @@ class MoodIconService : Service() {
 
     }
 
+    /**
+     * Show mood tags and hide moodfy icon
+     */
     private fun showMoodTags() {
         val moodTags = floatingView.findViewById<View>(R.id.mood_tags_container)
 
@@ -156,6 +162,13 @@ class MoodIconService : Service() {
 
         moodTags.visibility = View.VISIBLE
         mfIcon.visibility = View.GONE
+
+        //set onClick listeners for the mood tags
+        val mood1 = floatingView.findViewById<ImageButton>(R.id.mood_1)
+
+        mood1.setOnClickListener{
+            Toast.makeText( applicationContext,"Added to Happy", Toast.LENGTH_SHORT).show()
+        }
 
     }
 
