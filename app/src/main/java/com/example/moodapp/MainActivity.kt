@@ -1,9 +1,6 @@
 package com.example.moodapp
 
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -41,33 +38,78 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
 
-        var canDraw = true
-        var intent: Intent? = null
-
-        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
-            intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
-            canDraw = Settings.canDrawOverlays(this)
-            if(!canDraw && intent != null){
-                startActivity(intent)
-            }
-        }
-
-        /**
-        val startMoodfyBtn = findViewById<Button>(R.id.start_moodfy_btn)
-         startMoodfyBtn.setOnClickListener {
-             val service = Intent(this, MoodIconService::class.java)
-             startService(service)
-
-         }
-
-        val stopMoodfyBtn = findViewById<Button>(R.id.stop_moodfy_btn)
-        stopMoodfyBtn.setOnClickListener{
-            val service = Intent(this, MoodIconService::class.java)
-            stopService(service)
-        } **/
 
 
-         }
+
     }
+
+
+/** fun basicAlert() {
+        val builder = AlertDialog.Builder(this)
+        with(builder)
+        {
+            setTitle("Permission required")
+            setMessage("This is message")
+            setPositiveButton("OK", DialogInterface.OnClickListener(function = positiveButtonClick))
+            setNegativeButton("Cancel", negativeButtonClick)
+            show()
+        }
+    }
+
+
+    private fun setupPermissions() {
+    val permission =
+    ContextCompat.checkSelfPermission(this, android.Manifest.permission.SYSTEM_ALERT_WINDOW)
+
+    if (permission != PackageManager.PERMISSION_GRANTED && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+    if (ActivityCompat.shouldShowRequestPermissionRationale(
+    this,
+    Manifest.permission.SYSTEM_ALERT_WINDOW)) {
+    val builder = AlertDialog.Builder(this)
+    builder.setMessage("Overlay permission is required")
+    builder.setTitle("Permission required")
+    builder.setPositiveButton("OK"){
+    dialog, id -> makeRequest()
+    }
+    val dialog = builder.create()
+    dialog.show()
+    } else {
+    makeRequest()
+    }
+    }
+    }
+
+
+    private fun makeRequest() {
+    ActivityCompat.requestPermissions(
+    this,
+    arrayOf(Manifest.permission.SYSTEM_ALERT_WINDOW),
+    REQUEST_CODE_OVERLAY_PERMISSION
+    )
+
+    var canDraw = true
+    var intent: Intent? = null
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+    intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
+    canDraw = Settings.canDrawOverlays(this)
+    if (!canDraw && intent != null) {
+    startActivity(intent)
+    }
+    }
+
+
+    }
+
+    override fun onRequestPermissionsResult(
+    requestCode: Int,
+    permissions: Array<out String>,
+    grantResults: IntArray
+    ) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    } **/
+
+
+}
 
 

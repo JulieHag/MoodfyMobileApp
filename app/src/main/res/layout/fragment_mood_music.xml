@@ -31,15 +31,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.706" />
 
-    <Button
-        android:id="@+id/stop_moodfy_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="74dp"
-        android:text="@string/title_mood_music_btn_stop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/start_moodfy_btn"
-        app:layout_constraintVertical_bias="0.222" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

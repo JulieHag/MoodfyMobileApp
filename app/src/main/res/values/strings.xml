@@ -8,4 +8,9 @@
     <string name="title_mood_music">Mood Music</string>
     <string name="title_mood_music_btn">Start Moodfying your music</string>
     <string name="title_mood_music_btn_stop">Stop Moodfying your music</string>
+
+    <string name="system_overlay_permission">Permission to allow display over other apps is required for the Moodfy bubble to work on top of other apps.</string>
+    <string name="ok">OK</string>
+    <string name="permission_granted">Permission is granted. You can start Moodfying your music now.</string>
+
 </resources>
