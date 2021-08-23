@@ -99,7 +99,7 @@ class MoodMusicFragment : Fragment() {
             intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
             canDraw = Settings.canDrawOverlays(requireContext())
             if (!canDraw && intent != null) {
-                basicAlert()
+                permissionAlert()
 
             } else {
                 requireActivity().startService(Intent(context, MoodIconService::class.java))
@@ -122,7 +122,7 @@ class MoodMusicFragment : Fragment() {
      * Code to show user alert informing them that they need to allow overlay permissions
      * code adapted from https://www.journaldev.com/309/android-alert-dialog-using-kotlin
      */
-    fun basicAlert() {
+    fun permissionAlert() {
 
 
         val builder = AlertDialog.Builder(requireContext())

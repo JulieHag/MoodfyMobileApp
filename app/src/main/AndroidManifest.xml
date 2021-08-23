@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.moodapp">
 
+    //overlay permission needed for floating view
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    //internet permission needed for requests to API
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -24,6 +27,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--for login flow to work -->
+        <activity android:name="com.spotify.sdk.android.authentication.LoginActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <!--for overlay service -->
         <service android:name=".ui.floatingIcon.MoodIconService" />
     </application>
 
