@@ -9,21 +9,23 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.moodapp.databinding.ActivityMainBinding
-import com.example.moodapp.other.Constants.Companion.CLIENT_ID
-import com.example.moodapp.other.Constants.Companion.REDIRECT_URI
-import com.example.moodapp.other.Constants.Companion.REQUEST_CODE
+import com.example.moodapp.utils.Constants.Companion.CLIENT_ID
+import com.example.moodapp.utils.Constants.Companion.REDIRECT_URI
+import com.example.moodapp.utils.Constants.Companion.REQUEST_CODE
+import com.example.moodapp.utils.SessionManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.spotify.sdk.android.authentication.AuthenticationClient
 import com.spotify.sdk.android.authentication.AuthenticationRequest
 import com.spotify.sdk.android.authentication.AuthenticationResponse
 
 
-
 class MainActivity : AppCompatActivity() {
 
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var sessionManager: SessionManager
     val TAG = "MainActivity"
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        sessionManager = SessionManager(this)
 
         val navView: BottomNavigationView = binding.navView
 
@@ -55,29 +58,30 @@ class MainActivity : AppCompatActivity() {
             AuthenticationResponse.Type.TOKEN,
             REDIRECT_URI
         )
-        builder.setScopes(arrayOf("streaming"))
+        builder.setScopes(arrayOf("streaming", "user-read-currently-playing", "user-read-playback-state"))
+        //to give user chance to log out
+        builder.setShowDialog(true)
         val request = builder.build()
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request)
 
         /**
         val request = getAuthenticationRequest(AuthenticationResponse.Type.TOKEN)
         AuthenticationClient.openLoginActivity(
-            this,
-            Constants.REQUEST_CODE,
-            request
+        this,
+        Constants.REQUEST_CODE,
+        request
         ) **/
 
 
     }
 
 
-
     /**
     private fun getAuthenticationRequest(type: AuthenticationResponse.Type): AuthenticationRequest{
-        return AuthenticationRequest.Builder(CLIENT_ID, type, REDIRECT_URI)
-            .setShowDialog(false)
-            .setScopes(arrayOf("streaming"))
-            .build()
+    return AuthenticationRequest.Builder(CLIENT_ID, type, REDIRECT_URI)
+    .setShowDialog(false)
+    .setScopes(arrayOf("streaming"))
+    .build()
 
     } **/
 
@@ -95,7 +99,12 @@ class MainActivity : AppCompatActivity() {
                 AuthenticationResponse.Type.TOKEN -> {
                     //handle successful response - get requests from API
                     Log.d(TAG, "Successful auth")
+                    //save AUTH_TOKEN to session
+                    sessionManager.saveAuthToken(response.accessToken)
+
                 }
+
+
                 AuthenticationResponse.Type.ERROR -> {
                     //handle error response - alert dialog
                     Log.d(TAG, "Unsuccessful auth")
@@ -106,7 +115,14 @@ class MainActivity : AppCompatActivity() {
                     Log.d(TAG, "auth fow cancelled")
                 }
             }
+
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+
     }
 
 

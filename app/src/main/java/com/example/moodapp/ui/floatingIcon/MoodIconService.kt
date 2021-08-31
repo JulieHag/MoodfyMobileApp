@@ -1,6 +1,5 @@
 package com.example.moodapp.ui.floatingIcon
 
-import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.graphics.PixelFormat
@@ -10,25 +9,55 @@ import android.view.*
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.lifecycle.LifecycleService
 import com.example.moodapp.R
+import com.example.moodapp.data.api.SpotifyAPI
+import com.example.moodapp.utils.SessionManager
 
 /**
  * Code for floating icon funtionality is adapted from https://drive.google.com/file/d/1fY9r9uNZ9JYcbFWInI3ivmOyZEsMURG_/view
  */
-class MoodIconService : Service() {
+class MoodIconService() : LifecycleService() {
 
 
     private lateinit var windowManager: WindowManager
     private lateinit var params: WindowManager.LayoutParams
     private lateinit var floatingView: View
+    private lateinit var sessionManager: SessionManager
+    //lateinit var viewModel: SpotifyViewModel
 
 
+    /**
+    fun getCurrentTrack(token: String, marketCode: String) = lifecycleScope.launchWhenCreated {
+    currentTrack.postValue(Resource.Loading())
+    val response = spotifyRepository.getCurrentTrack(
+    token = "Bearer ${sessionManager.fetchAuthToken()}",
+    marketCode
+    )
+    currentTrack.postValue(handleCurrentTrackResponse(response))
+
+
+    }
+
+    private fun handleCurrentTrackResponse(response: Response<CurrentTrackResponse>): Resource<CurrentTrackResponse> {
+    if (response.isSuccessful) {
+    response.body()?.let { resultResponse ->
+    return Resource.Success(resultResponse)
+
+    }
+    }
+    return Resource.Error(response.message())
+    }**/
 
 
     override fun onCreate() {
         super.onCreate()
 
         Toast.makeText(this, "Service created", Toast.LENGTH_SHORT).show()
+
+        // val spotifyRepository = SpotifyRepository()
+        // val viewModelProviderFactory = SpotifyViewModelProviderFactory(spotifyRepository)
+        // viewModel = ViewModelProvider(this, viewModelProviderFactory).get(SpotifyViewModel::class.java)
 
         windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
@@ -62,7 +91,6 @@ class MoodIconService : Service() {
         //set the close button
         val closeButtonCollapsed = floatingView.findViewById(R.id.close_btn) as ImageView
         closeButtonCollapsed.setOnClickListener { stopSelf() }
-
 
 
         val showMfIcon = floatingView.findViewById<View>(R.id.mf_icon_container)
@@ -166,14 +194,23 @@ class MoodIconService : Service() {
         //set onClick listeners for the mood tags
         val mood1 = floatingView.findViewById<ImageButton>(R.id.mood_1)
 
-        mood1.setOnClickListener{
-            Toast.makeText( applicationContext,"Added to Happy", Toast.LENGTH_SHORT).show()
+        mood1.setOnClickListener {
+
+            Toast.makeText(applicationContext, "Added to happy", Toast.LENGTH_SHORT).show()
         }
+
+
+    }
+
+    private fun getCurrentTrack(){
 
     }
 
 
 }
+
+
+
 
 
 

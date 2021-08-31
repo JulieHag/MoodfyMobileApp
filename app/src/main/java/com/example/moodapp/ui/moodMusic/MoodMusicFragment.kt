@@ -21,6 +21,7 @@ import com.example.moodapp.ui.floatingIcon.MoodIconService
 class MoodMusicFragment : Fragment() {
 
 
+    val TAG = "MoodMusicFragment"
     private lateinit var moodMusicViewModel: MoodMusicViewModel
     private var _binding: FragmentMoodMusicBinding? = null
 
@@ -67,6 +68,8 @@ class MoodMusicFragment : Fragment() {
             //requestPermissions()
         })
         return root
+
+
 
 
     }
@@ -139,5 +142,7 @@ class MoodMusicFragment : Fragment() {
         }
 
     }
+
+
 }
 

@@ -1,4 +1,4 @@
-package com.example.moodapp.other
+package com.example.moodapp.utils
 
 class Constants {
 
@@ -8,5 +8,9 @@ class Constants {
        const val REQUEST_CODE = 1247
         const val REDIRECT_URI = "com.example.moodapp://callback"
         const val CLIENT_ID = "4ae600c0f0204a4cab8cd4b4bf982119"
+        const val BASE_URL = "https://api.spotify.com"
+
+        const val ACTION_ADD_TO_HAPPY = "ACTION_ADD_TO_HAPPY"
+        const val ACTION_ADD_TO_SAD = "ACTION_ADD_TO_SAD"
    }
 }
