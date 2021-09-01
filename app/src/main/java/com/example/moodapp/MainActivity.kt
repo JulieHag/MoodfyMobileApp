@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
             AuthenticationResponse.Type.TOKEN,
             REDIRECT_URI
         )
-        builder.setScopes(arrayOf("streaming", "user-read-currently-playing", "user-read-playback-state"))
+        builder.setScopes(arrayOf("user-read-currently-playing", "user-read-playback-state", "playlist-modify-public"))
         //to give user chance to log out
         builder.setShowDialog(true)
         val request = builder.build()

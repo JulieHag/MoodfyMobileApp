@@ -5,14 +5,24 @@ import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.IBinder
+import android.util.Log
 import android.view.*
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.lifecycle.LifecycleService
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.example.moodapp.R
+import com.example.moodapp.data.api.RetrofitInstance
 import com.example.moodapp.data.api.SpotifyAPI
+import com.example.moodapp.models.currentlyPlaying.CurrentTrackResponse
+import com.example.moodapp.repository.SpotifyRepository
+import com.example.moodapp.utils.Resource
 import com.example.moodapp.utils.SessionManager
+import kotlinx.coroutines.launch
+import retrofit2.Response
 
 /**
  * Code for floating icon funtionality is adapted from https://drive.google.com/file/d/1fY9r9uNZ9JYcbFWInI3ivmOyZEsMURG_/view
@@ -24,30 +34,9 @@ class MoodIconService() : LifecycleService() {
     private lateinit var params: WindowManager.LayoutParams
     private lateinit var floatingView: View
     private lateinit var sessionManager: SessionManager
-    //lateinit var viewModel: SpotifyViewModel
-
-
-    /**
-    fun getCurrentTrack(token: String, marketCode: String) = lifecycleScope.launchWhenCreated {
-    currentTrack.postValue(Resource.Loading())
-    val response = spotifyRepository.getCurrentTrack(
-    token = "Bearer ${sessionManager.fetchAuthToken()}",
-    marketCode
-    )
-    currentTrack.postValue(handleCurrentTrackResponse(response))
-
-
-    }
-
-    private fun handleCurrentTrackResponse(response: Response<CurrentTrackResponse>): Resource<CurrentTrackResponse> {
-    if (response.isSuccessful) {
-    response.body()?.let { resultResponse ->
-    return Resource.Success(resultResponse)
-
-    }
-    }
-    return Resource.Error(response.message())
-    }**/
+    private lateinit var spotifyRepository: SpotifyRepository
+    val currentTrack: MutableLiveData<Resource<CurrentTrackResponse>> = MutableLiveData()
+    val TAG = "MoodIconService"
 
 
     override fun onCreate() {
@@ -55,9 +44,6 @@ class MoodIconService() : LifecycleService() {
 
         Toast.makeText(this, "Service created", Toast.LENGTH_SHORT).show()
 
-        // val spotifyRepository = SpotifyRepository()
-        // val viewModelProviderFactory = SpotifyViewModelProviderFactory(spotifyRepository)
-        // viewModel = ViewModelProvider(this, viewModelProviderFactory).get(SpotifyViewModel::class.java)
 
         windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
@@ -193,17 +179,55 @@ class MoodIconService() : LifecycleService() {
 
         //set onClick listeners for the mood tags
         val mood1 = floatingView.findViewById<ImageButton>(R.id.mood_1)
+        val mood2 = floatingView.findViewById<ImageButton>(R.id.mood_2)
+
 
         mood1.setOnClickListener {
+           sessionManager = SessionManager(applicationContext)
+            spotifyRepository = SpotifyRepository()
 
-            Toast.makeText(applicationContext, "Added to happy", Toast.LENGTH_SHORT).show()
+
+             //Toast.makeText(applicationContext, "${sessionManager.fetchAuthToken()}", Toast.LENGTH_SHORT).show()
+            getCurrentTrack("Bearer ${sessionManager.fetchAuthToken()}", "GB")
+        }
+
+        mood2.setOnClickListener{
+
         }
 
 
     }
 
-    private fun getCurrentTrack(){
+    fun getCurrentTrack(token: String, marketCode: String) = lifecycleScope.launch {
+        //currentTrack.postValue(Resource.Loading())
+        val response = spotifyRepository.getCurrentTrack(token, marketCode)
+        currentTrack.postValue(handleCurrentTrackResponse(response))
+        currentTrack.observe(this@MoodIconService, Observer { response ->
+            when (response) {
+                is Resource.Success -> {
 
+                    val trackUri = response.data?.item?.uri
+                    Toast.makeText(applicationContext, trackUri.toString(), Toast.LENGTH_SHORT).show()
+                }
+                is Resource.Error -> {
+                    response.message?.let { message ->
+                        Log.e(TAG, "An error occured: $message")
+                    }
+
+                }
+
+            }
+        })
+
+    }
+
+    private fun handleCurrentTrackResponse(response: Response<CurrentTrackResponse>): Resource<CurrentTrackResponse> {
+        if (response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                return Resource.Success(resultResponse)
+            }
+        }
+        return Resource.Error(response.message())
     }
 
 

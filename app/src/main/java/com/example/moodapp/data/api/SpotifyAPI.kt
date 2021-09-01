@@ -14,10 +14,11 @@ interface SpotifyAPI {
     @GET("v1/me/player/currently-playing")
     //want to execute function asynchronously using coroutines
     suspend fun getCurrentTrack(
-        @Query("market")
-        marketCode: String = "GB",
         @Header("Authorization")
         token: String,
+        @Query("market")
+        marketCode: String = "GB",
+
 
         ): Response<CurrentTrackResponse>
 }
