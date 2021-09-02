@@ -10,7 +10,8 @@ class Constants {
         const val CLIENT_ID = "4ae600c0f0204a4cab8cd4b4bf982119"
         const val BASE_URL = "https://api.spotify.com"
 
-        const val ACTION_ADD_TO_HAPPY = "ACTION_ADD_TO_HAPPY"
-        const val ACTION_ADD_TO_SAD = "ACTION_ADD_TO_SAD"
+        // playlist names
+        const val HAPPY_MF = "HAPPY_MF"
+        const val SAD_MF = "SAD_MF"
    }
 }

@@ -18,25 +18,32 @@ import com.example.moodapp.R
 import com.example.moodapp.data.api.RetrofitInstance
 import com.example.moodapp.data.api.SpotifyAPI
 import com.example.moodapp.models.currentlyPlaying.CurrentTrackResponse
+import com.example.moodapp.models.userPlaylists.Item
+import com.example.moodapp.models.userPlaylists.UserPlaylistsResponse
 import com.example.moodapp.repository.SpotifyRepository
+import com.example.moodapp.utils.Constants.Companion.HAPPY_MF
+import com.example.moodapp.utils.Constants.Companion.SAD_MF
 import com.example.moodapp.utils.Resource
 import com.example.moodapp.utils.SessionManager
 import kotlinx.coroutines.launch
+import okhttp3.internal.wait
 import retrofit2.Response
 
 /**
  * Code for floating icon funtionality is adapted from https://drive.google.com/file/d/1fY9r9uNZ9JYcbFWInI3ivmOyZEsMURG_/view
  */
+
 class MoodIconService() : LifecycleService() {
 
-
+    val TAG = "MoodIconService"
     private lateinit var windowManager: WindowManager
     private lateinit var params: WindowManager.LayoutParams
     private lateinit var floatingView: View
     private lateinit var sessionManager: SessionManager
     private lateinit var spotifyRepository: SpotifyRepository
+    private lateinit var playlistName: String
     val currentTrack: MutableLiveData<Resource<CurrentTrackResponse>> = MutableLiveData()
-    val TAG = "MoodIconService"
+    val userPlaylists: MutableLiveData<Resource<UserPlaylistsResponse>> = MutableLiveData()
 
 
     override fun onCreate() {
@@ -170,10 +177,16 @@ class MoodIconService() : LifecycleService() {
      * Show mood tags and hide moodfy icon
      */
     private fun showMoodTags() {
-        val moodTags = floatingView.findViewById<View>(R.id.mood_tags_container)
+        //to get auth token for api calls
+        sessionManager = SessionManager(applicationContext)
+        //instance of repository to make API requests
+        spotifyRepository = SpotifyRepository()
 
+
+        val moodTags = floatingView.findViewById<View>(R.id.mood_tags_container)
         val mfIcon = floatingView.findViewById<View>(R.id.mf_icon)
 
+        //shows mood tags and hides the Moodfy icon
         moodTags.visibility = View.VISIBLE
         mfIcon.visibility = View.GONE
 
@@ -183,31 +196,39 @@ class MoodIconService() : LifecycleService() {
 
 
         mood1.setOnClickListener {
-           sessionManager = SessionManager(applicationContext)
-            spotifyRepository = SpotifyRepository()
+            playlistName = HAPPY_MF
 
-
-             //Toast.makeText(applicationContext, "${sessionManager.fetchAuthToken()}", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(applicationContext, "${sessionManager.fetchAuthToken()}", Toast.LENGTH_SHORT).show()
             getCurrentTrack("Bearer ${sessionManager.fetchAuthToken()}", "GB")
+
+            getUserPlaylists("Bearer ${sessionManager.fetchAuthToken()}")
+
+
         }
 
-        mood2.setOnClickListener{
+        mood2.setOnClickListener {
+            playlistName = SAD_MF
+            getUserPlaylists("Bearer ${sessionManager.fetchAuthToken()}")
 
         }
 
 
     }
 
-    fun getCurrentTrack(token: String, marketCode: String) = lifecycleScope.launch {
+    //start network call within a coroutine
+    private fun getCurrentTrack(token: String, marketCode: String) = lifecycleScope.launch {
         //currentTrack.postValue(Resource.Loading())
         val response = spotifyRepository.getCurrentTrack(token, marketCode)
+        // handle the current track response and return whether the network call  has been successful or not
         currentTrack.postValue(handleCurrentTrackResponse(response))
+        //observe the live data and carry out actions depending on the return object from handleCurrentTrackResponse (i.e. successful or error)
         currentTrack.observe(this@MoodIconService, Observer { response ->
             when (response) {
                 is Resource.Success -> {
 
                     val trackUri = response.data?.item?.uri
-                    Toast.makeText(applicationContext, trackUri.toString(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, trackUri.toString(), Toast.LENGTH_SHORT)
+                        .show()
                 }
                 is Resource.Error -> {
                     response.message?.let { message ->
@@ -228,6 +249,55 @@ class MoodIconService() : LifecycleService() {
             }
         }
         return Resource.Error(response.message())
+    }
+
+    private fun getUserPlaylists(token: String) = lifecycleScope.launch {
+        var havePlaylist = false
+        val playlistResponse = spotifyRepository.getUserPlaylists(token)
+        // handle the user playlist response and return whether the network call  has been successful or not
+        userPlaylists.postValue(handleUserPlaylistsResponse(playlistResponse))
+        //observe the live data and carry out actions depending on the return object from handleCurrentTrackResponse (i.e. successful or error)
+        userPlaylists.observe(this@MoodIconService, Observer { playlistResponse ->
+            when (playlistResponse) {
+                is Resource.Success -> {
+                    val items = playlistResponse.data?.items
+                    if (items != null) {
+                        for (item in items) {
+
+                            //Log.d(TAG, "${item.name}")
+
+                            if (item.name == playlistName) {
+                            havePlaylist = true
+                            Log.d(TAG, "Name match")
+                            // post currently playing song to playlist
+                            }
+                        }
+
+
+                    }
+
+                    //Log.d(TAG, " playlist: $playlistName ${havePlaylist}")
+                    //if havePlaylist = false then create playlist and add currently playing song to it
+
+                }
+                is Resource.Error -> {
+                    playlistResponse.message?.let { message ->
+                        Log.d(TAG, "An error occured: $message")
+                    }
+
+                }
+
+            }
+        })
+    }
+
+    private fun handleUserPlaylistsResponse(playlistsResponse: Response<UserPlaylistsResponse>): Resource<UserPlaylistsResponse> {
+        if (playlistsResponse.isSuccessful) {
+            playlistsResponse.body()?.let { resultResponse ->
+                return Resource.Success(resultResponse)
+            }
+        }
+        return Resource.Error(playlistsResponse.message())
     }
 
 
