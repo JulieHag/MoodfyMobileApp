@@ -115,6 +115,42 @@
                     android:background="@null"
                     android:src="@drawable/ic_face" />
 
+                <ImageButton
+                    android:id="@+id/mood_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="120dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_excited" />
+
+                <ImageButton
+                    android:id="@+id/mood_8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginTop="120dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_face" />
+
+                <ImageButton
+                    android:id="@+id/mood_9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="160dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_excited" />
+
+                <ImageButton
+                    android:id="@+id/mood_10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginTop="160dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_face" />
+
+
+
 
             </RelativeLayout>
 

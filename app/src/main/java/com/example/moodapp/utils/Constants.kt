@@ -13,5 +13,13 @@ class Constants {
         // playlist names
         const val HAPPY_MF = "HAPPY_MF"
         const val SAD_MF = "SAD_MF"
+        const val NOSTALGIC_MF = "NOSTALGIC_MF"
+        const val LOVE_MF = "LOVE_MF"
+        const val EXCITED_MF = "EXCITED_MF"
+        const val CALM_MF = "CALM_MF"
+        const val PRIDE_MF = "PRIDE_MF"
+        const val ANGRY_MF = "ANGRY_MF"
+        const val WONDER_MF = "WONDER_MF"
+        const val AMUSED_MF = "AMUSED_MF"
    }
 }

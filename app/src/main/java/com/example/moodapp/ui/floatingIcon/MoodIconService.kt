@@ -15,19 +15,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.example.moodapp.R
-import com.example.moodapp.data.api.RetrofitInstance
-import com.example.moodapp.data.api.SpotifyAPI
 import com.example.moodapp.models.currentlyPlaying.CurrentTrackResponse
-import com.example.moodapp.models.userPlaylists.Item
-import com.example.moodapp.models.userPlaylists.UserPlaylistsResponse
 import com.example.moodapp.repository.SpotifyRepository
 import com.example.moodapp.utils.Constants.Companion.HAPPY_MF
 import com.example.moodapp.utils.Constants.Companion.SAD_MF
 import com.example.moodapp.utils.Resource
 import com.example.moodapp.utils.SessionManager
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import okhttp3.internal.wait
+import retrofit2.HttpException
 import retrofit2.Response
+import java.io.IOException
 
 /**
  * Code for floating icon funtionality is adapted from https://drive.google.com/file/d/1fY9r9uNZ9JYcbFWInI3ivmOyZEsMURG_/view
@@ -42,8 +40,9 @@ class MoodIconService() : LifecycleService() {
     private lateinit var sessionManager: SessionManager
     private lateinit var spotifyRepository: SpotifyRepository
     private lateinit var playlistName: String
-    val currentTrack: MutableLiveData<Resource<CurrentTrackResponse>> = MutableLiveData()
-    val userPlaylists: MutableLiveData<Resource<UserPlaylistsResponse>> = MutableLiveData()
+    private lateinit var trackUri: String
+   // val currentTrack: MutableLiveData<Resource<CurrentTrackResponse>> = MutableLiveData()
+    //val userPlaylists: MutableLiveData<Resource<UserPlaylistsResponse>> = MutableLiveData()
 
 
     override fun onCreate() {
@@ -197,9 +196,7 @@ class MoodIconService() : LifecycleService() {
 
         mood1.setOnClickListener {
             playlistName = HAPPY_MF
-
             //Toast.makeText(applicationContext, "${sessionManager.fetchAuthToken()}", Toast.LENGTH_SHORT).show()
-            getCurrentTrack("Bearer ${sessionManager.fetchAuthToken()}", "GB")
 
             getUserPlaylists("Bearer ${sessionManager.fetchAuthToken()}")
 
@@ -215,8 +212,8 @@ class MoodIconService() : LifecycleService() {
 
     }
 
-    //start network call within a coroutine
-    private fun getCurrentTrack(token: String, marketCode: String) = lifecycleScope.launch {
+    /**
+    private fun getCurrentTrack2(token: String, marketCode: String) = lifecycleScope.launch {
         //currentTrack.postValue(Resource.Loading())
         val response = spotifyRepository.getCurrentTrack(token, marketCode)
         // handle the current track response and return whether the network call  has been successful or not
@@ -226,9 +223,9 @@ class MoodIconService() : LifecycleService() {
             when (response) {
                 is Resource.Success -> {
 
-                    val trackUri = response.data?.item?.uri
-                    Toast.makeText(applicationContext, trackUri.toString(), Toast.LENGTH_SHORT)
-                        .show()
+                    //val trackUri = response.data?.item?.uri
+                   // Toast.makeText(applicationContext, trackUri.toString(), Toast.LENGTH_SHORT)
+                        //.show()
                 }
                 is Resource.Error -> {
                     response.message?.let { message ->
@@ -240,6 +237,35 @@ class MoodIconService() : LifecycleService() {
             }
         })
 
+    }**/
+
+
+    /**
+     *
+     */
+    private fun getCurrentTrack(token: String, marketCode: String) = lifecycleScope.launch{
+
+        val trackResponse = try {
+            // Because getCurrentTrack is a suspend function in SpotifyAPI, code will only continue once current track has been retrieved from api
+            spotifyRepository.getCurrentTrack(token, marketCode)
+        } catch (e: IOException) {
+            Log.e(TAG, "IOException, you may not have internet connection")
+            return@launch
+        } catch (e: HttpException) {
+            Log.e(TAG, "HttpException, unexpected response")
+            return@launch
+        }
+
+        if (trackResponse.isSuccessful && trackResponse.body() != null) {
+            //successful response and the body is not null
+            trackUri = trackResponse.body()!!.item.uri
+
+            //Toast.makeText(applicationContext, "hello", Toast.LENGTH_SHORT)
+
+
+        } else {
+            Log.e(TAG, "Response not successful")
+        }
     }
 
     private fun handleCurrentTrackResponse(response: Response<CurrentTrackResponse>): Resource<CurrentTrackResponse> {
@@ -251,57 +277,60 @@ class MoodIconService() : LifecycleService() {
         return Resource.Error(response.message())
     }
 
+
+
+    /**
+     * Function to send a get request to the API which returns with the current
+     * user's playlists.
+     * Try to send request to API, catch if there are exceptions.
+     * If the response is successful check if user already has the specific
+     * mood playlist. If they do, add the currently playing song to the playlist.
+     * If they don't, create a new playlist with the name of the mood they pressed
+     * and add the currently playing song to it.
+     *
+     */
     private fun getUserPlaylists(token: String) = lifecycleScope.launch {
         var havePlaylist = false
-        val playlistResponse = spotifyRepository.getUserPlaylists(token)
-        // handle the user playlist response and return whether the network call  has been successful or not
-        userPlaylists.postValue(handleUserPlaylistsResponse(playlistResponse))
-        //observe the live data and carry out actions depending on the return object from handleCurrentTrackResponse (i.e. successful or error)
-        userPlaylists.observe(this@MoodIconService, Observer { playlistResponse ->
-            when (playlistResponse) {
-                is Resource.Success -> {
-                    val items = playlistResponse.data?.items
-                    if (items != null) {
-                        for (item in items) {
-
-                            //Log.d(TAG, "${item.name}")
-
-                            if (item.name == playlistName) {
-                            havePlaylist = true
-                            Log.d(TAG, "Name match")
-                            // post currently playing song to playlist
-                            }
-                        }
-
-
-                    }
-
-                    //Log.d(TAG, " playlist: $playlistName ${havePlaylist}")
-                    //if havePlaylist = false then create playlist and add currently playing song to it
-
-                }
-                is Resource.Error -> {
-                    playlistResponse.message?.let { message ->
-                        Log.d(TAG, "An error occured: $message")
-                    }
-
-                }
-
-            }
-        })
-    }
-
-    private fun handleUserPlaylistsResponse(playlistsResponse: Response<UserPlaylistsResponse>): Resource<UserPlaylistsResponse> {
-        if (playlistsResponse.isSuccessful) {
-            playlistsResponse.body()?.let { resultResponse ->
-                return Resource.Success(resultResponse)
-            }
+        val playlistResponse = try {
+            spotifyRepository.getUserPlaylists(token)
+        } catch (e: IOException) {
+            Log.e(TAG, "IOException, you may not have internet connection")
+            return@launch
+        } catch (e: HttpException) {
+            Log.e(TAG, "HttpException, unexpected response")
+            return@launch
         }
-        return Resource.Error(playlistsResponse.message())
+
+        if (playlistResponse.isSuccessful && playlistResponse.body() != null) {
+            val items = playlistResponse.body()!!.items
+            for (item in items) {
+               //Log.d(TAG, "${item.name}")
+
+                if (item.name == playlistName) {
+                    havePlaylist = true
+                    getCurrentTrack("Bearer ${sessionManager.fetchAuthToken()}", "GB")
+                    //1 second delay to make sure getCurrentTrack completes before accessing trackUri
+                    delay(1000L)
+                    Log.d(TAG, "$trackUri")
+
+                    // post currently playing song to playlist
+                }
+            }
+            Log.d(TAG, "$playlistName $havePlaylist")
+            //if playlist doesn't exist then create playlist called playlistName and add current song to it
+
+        } else {
+            Log.e(TAG, "Response not successful")
+        }
+
+
     }
 
 
 }
+
+
+
 
 
 
