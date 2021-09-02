@@ -11,20 +11,15 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.lifecycle.LifecycleService
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.example.moodapp.R
-import com.example.moodapp.models.currentlyPlaying.CurrentTrackResponse
 import com.example.moodapp.repository.SpotifyRepository
 import com.example.moodapp.utils.Constants.Companion.HAPPY_MF
 import com.example.moodapp.utils.Constants.Companion.SAD_MF
-import com.example.moodapp.utils.Resource
 import com.example.moodapp.utils.SessionManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
-import retrofit2.Response
 import java.io.IOException
 
 /**
@@ -268,14 +263,6 @@ class MoodIconService() : LifecycleService() {
         }
     }
 
-    private fun handleCurrentTrackResponse(response: Response<CurrentTrackResponse>): Resource<CurrentTrackResponse> {
-        if (response.isSuccessful) {
-            response.body()?.let { resultResponse ->
-                return Resource.Success(resultResponse)
-            }
-        }
-        return Resource.Error(response.message())
-    }
 
 
 
