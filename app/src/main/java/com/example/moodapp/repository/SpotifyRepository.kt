@@ -13,4 +13,8 @@ class SpotifyRepository {
     //request spotify api to return a list of user's playlists
     suspend fun getUserPlaylists(token: String) =
         RetrofitInstance.api.getUserPlaylists(token)
+
+    //post currently playing song to users mood playlist
+    suspend fun addToMoodPlaylist(token: String, playlistId: String, trackUri: String)=
+        RetrofitInstance.api.addToMoodPlaylist(token, playlistId, trackUri)
 }

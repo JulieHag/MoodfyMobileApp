@@ -1,11 +1,10 @@
 package com.example.moodapp.data.api
 
+import com.example.moodapp.models.addSongToPlaylist.AddSongToPlaylistResponse
 import com.example.moodapp.models.currentlyPlaying.CurrentTrackResponse
 import com.example.moodapp.models.userPlaylists.UserPlaylistsResponse
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Query
+import retrofit2.http.*
 
 /**
  *  Interface used to define requests
@@ -30,4 +29,15 @@ interface SpotifyAPI {
         @Header("Authorization")
         token: String
     ) : Response<UserPlaylistsResponse>
+
+    // post currently playing song to user's mood playlist
+    @POST("v1/playlists/{playlist_id}/tracks")
+    suspend fun addToMoodPlaylist(
+        @Header("Authorization")
+        token: String,
+        @Path("playlist_id")
+        playlistId: String,
+        @Query("uris")
+        trackUri: String
+    ): Response<AddSongToPlaylistResponse>
 }

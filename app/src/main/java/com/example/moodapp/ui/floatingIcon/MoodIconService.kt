@@ -36,7 +36,8 @@ class MoodIconService() : LifecycleService() {
     private lateinit var spotifyRepository: SpotifyRepository
     private lateinit var playlistName: String
     private lateinit var trackUri: String
-   // val currentTrack: MutableLiveData<Resource<CurrentTrackResponse>> = MutableLiveData()
+    private lateinit var playlistId: String
+    // val currentTrack: MutableLiveData<Resource<CurrentTrackResponse>> = MutableLiveData()
     //val userPlaylists: MutableLiveData<Resource<UserPlaylistsResponse>> = MutableLiveData()
 
 
@@ -209,28 +210,28 @@ class MoodIconService() : LifecycleService() {
 
     /**
     private fun getCurrentTrack2(token: String, marketCode: String) = lifecycleScope.launch {
-        //currentTrack.postValue(Resource.Loading())
-        val response = spotifyRepository.getCurrentTrack(token, marketCode)
-        // handle the current track response and return whether the network call  has been successful or not
-        currentTrack.postValue(handleCurrentTrackResponse(response))
-        //observe the live data and carry out actions depending on the return object from handleCurrentTrackResponse (i.e. successful or error)
-        currentTrack.observe(this@MoodIconService, Observer { response ->
-            when (response) {
-                is Resource.Success -> {
+    //currentTrack.postValue(Resource.Loading())
+    val response = spotifyRepository.getCurrentTrack(token, marketCode)
+    // handle the current track response and return whether the network call  has been successful or not
+    currentTrack.postValue(handleCurrentTrackResponse(response))
+    //observe the live data and carry out actions depending on the return object from handleCurrentTrackResponse (i.e. successful or error)
+    currentTrack.observe(this@MoodIconService, Observer { response ->
+    when (response) {
+    is Resource.Success -> {
 
-                    //val trackUri = response.data?.item?.uri
-                   // Toast.makeText(applicationContext, trackUri.toString(), Toast.LENGTH_SHORT)
-                        //.show()
-                }
-                is Resource.Error -> {
-                    response.message?.let { message ->
-                        Log.e(TAG, "An error occured: $message")
-                    }
+    //val trackUri = response.data?.item?.uri
+    // Toast.makeText(applicationContext, trackUri.toString(), Toast.LENGTH_SHORT)
+    //.show()
+    }
+    is Resource.Error -> {
+    response.message?.let { message ->
+    Log.e(TAG, "An error occured: $message")
+    }
 
-                }
+    }
 
-            }
-        })
+    }
+    })
 
     }**/
 
@@ -238,7 +239,7 @@ class MoodIconService() : LifecycleService() {
     /**
      *
      */
-    private fun getCurrentTrack(token: String, marketCode: String) = lifecycleScope.launch{
+    private fun getCurrentTrack(token: String, marketCode: String) = lifecycleScope.launch {
 
         val trackResponse = try {
             // Because getCurrentTrack is a suspend function in SpotifyAPI, code will only continue once current track has been retrieved from api
@@ -262,8 +263,6 @@ class MoodIconService() : LifecycleService() {
             Log.e(TAG, "Response not successful")
         }
     }
-
-
 
 
     /**
@@ -291,16 +290,25 @@ class MoodIconService() : LifecycleService() {
         if (playlistResponse.isSuccessful && playlistResponse.body() != null) {
             val items = playlistResponse.body()!!.items
             for (item in items) {
-               //Log.d(TAG, "${item.name}")
+                //Log.d(TAG, "${item.name}")
 
                 if (item.name == playlistName) {
                     havePlaylist = true
+
                     getCurrentTrack("Bearer ${sessionManager.fetchAuthToken()}", "GB")
                     //1 second delay to make sure getCurrentTrack completes before accessing trackUri
                     delay(1000L)
                     Log.d(TAG, "$trackUri")
-
+                    playlistId = item.id
+                    Log.d(TAG, "$playlistId")
                     // post currently playing song to playlist
+                    delay(1000L)
+                    addToMoodPlaylist(
+                        "Bearer ${sessionManager.fetchAuthToken()}",
+                        playlistId,
+                        trackUri
+
+                    )
                 }
             }
             Log.d(TAG, "$playlistName $havePlaylist")
@@ -312,6 +320,27 @@ class MoodIconService() : LifecycleService() {
 
 
     }
+
+    private fun addToMoodPlaylist(token: String, playlistId: String, trackUri: String) =
+        lifecycleScope.launch {
+            val addSongToPlaylistResponse = try {
+                spotifyRepository.addToMoodPlaylist(token, playlistId, trackUri)
+            } catch (e: IOException) {
+                Log.e(TAG, "IOException, you may not have internet connection")
+                return@launch
+            } catch (e: HttpException) {
+                Log.e(TAG, "HttpException, unexpected response")
+                return@launch
+            }
+
+            if (addSongToPlaylistResponse.isSuccessful && addSongToPlaylistResponse.body() != null) {
+                Toast.makeText(applicationContext, "Added to $playlistName", Toast.LENGTH_SHORT)
+                    .show()
+
+            } else {
+                Log.e(TAG, "Response not successful")
+            }
+        }
 
 
 }
