@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import android.view.*
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
@@ -37,8 +38,7 @@ class MoodIconService() : LifecycleService() {
     private lateinit var playlistName: String
     private lateinit var trackUri: String
     private lateinit var playlistId: String
-    // val currentTrack: MutableLiveData<Resource<CurrentTrackResponse>> = MutableLiveData()
-    //val userPlaylists: MutableLiveData<Resource<UserPlaylistsResponse>> = MutableLiveData()
+    private lateinit var userId: String
 
 
     override fun onCreate() {
@@ -186,8 +186,8 @@ class MoodIconService() : LifecycleService() {
         mfIcon.visibility = View.GONE
 
         //set onClick listeners for the mood tags
-        val mood1 = floatingView.findViewById<ImageButton>(R.id.mood_1)
-        val mood2 = floatingView.findViewById<ImageButton>(R.id.mood_2)
+        val mood1 = floatingView.findViewById<Button>(R.id.mood_1)
+        val mood2 = floatingView.findViewById<Button>(R.id.mood_2)
 
 
         mood1.setOnClickListener {
@@ -276,6 +276,7 @@ class MoodIconService() : LifecycleService() {
      *
      */
     private fun getUserPlaylists(token: String) = lifecycleScope.launch {
+        // havePlaylist to keep check if user already has an existing mood playlist matching tag
         var havePlaylist = false
         val playlistResponse = try {
             spotifyRepository.getUserPlaylists(token)
@@ -294,25 +295,31 @@ class MoodIconService() : LifecycleService() {
 
                 if (item.name == playlistName) {
                     havePlaylist = true
-
-                    getCurrentTrack("Bearer ${sessionManager.fetchAuthToken()}", "GB")
-                    //1 second delay to make sure getCurrentTrack completes before accessing trackUri
-                    delay(1000L)
-                    Log.d(TAG, "$trackUri")
                     playlistId = item.id
-                    Log.d(TAG, "$playlistId")
-                    // post currently playing song to playlist
-                    delay(1000L)
-                    addToMoodPlaylist(
-                        "Bearer ${sessionManager.fetchAuthToken()}",
-                        playlistId,
-                        trackUri
-
-                    )
                 }
             }
-            Log.d(TAG, "$playlistName $havePlaylist")
-            //if playlist doesn't exist then create playlist called playlistName and add current song to it
+
+            if (havePlaylist) {
+                getCurrentTrack("Bearer ${sessionManager.fetchAuthToken()}", "GB")
+                //1 second delay to make sure getCurrentTrack completes before accessing trackUri
+                delay(1000L)
+                Log.d(TAG, " have playlist $playlistId")
+                // post currently playing song to playlist
+                addToMoodPlaylist(
+                    "Bearer ${sessionManager.fetchAuthToken()}",
+                    playlistId,
+                    trackUri
+                )
+            } else {
+
+                // User doesn't have mood playlist created yet. Have to get user id and then create a new playlist with current song being added to it
+                getUserProfile("Bearer ${sessionManager.fetchAuthToken()}")
+                delay(1000L)
+               // Log.d(TAG, "$userId")
+                Log.d(TAG, "Don't have playlist")
+                createUserPlaylist("Bearer ${sessionManager.fetchAuthToken()}", userId, "name: $playlistName")
+            }
+
 
         } else {
             Log.e(TAG, "Response not successful")
@@ -337,6 +344,46 @@ class MoodIconService() : LifecycleService() {
                 Toast.makeText(applicationContext, "Added to $playlistName", Toast.LENGTH_SHORT)
                     .show()
 
+            } else {
+                Log.e(TAG, "Response not successful")
+            }
+        }
+
+
+    private fun getUserProfile(token: String) = lifecycleScope.launch {
+        val userProfileResponse = try {
+            spotifyRepository.getUserProfile(token)
+        } catch (e: IOException) {
+            Log.e(TAG, "IOException, you may not have internet connection")
+            return@launch
+        } catch (e: HttpException) {
+            Log.e(TAG, "HttpException, unexpected response")
+            return@launch
+        }
+
+        if (userProfileResponse.isSuccessful && userProfileResponse.body() != null) {
+            userId = userProfileResponse.body()!!.id
+
+            // create a playlist with mood tag name
+        } else {
+            Log.e(TAG, "Response not successful")
+        }
+    }
+
+    private fun createUserPlaylist(token: String, userId: String, name: String) =
+        lifecycleScope.launch {
+            val createPlaylistResponse = try {
+                spotifyRepository.createUserPlaylist(token, userId, name)
+            } catch (e: IOException) {
+                Log.e(TAG, "IOException, you may not have internet connection")
+                return@launch
+            } catch (e: HttpException) {
+                Log.e(TAG, "HttpException, unexpected response")
+                return@launch
+            }
+
+            if(createPlaylistResponse.isSuccessful && createPlaylistResponse.body() != null){
+                Log.d(TAG, "Success! Created new playlist")
             } else {
                 Log.e(TAG, "Response not successful")
             }

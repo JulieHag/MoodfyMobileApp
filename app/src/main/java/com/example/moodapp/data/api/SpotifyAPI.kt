@@ -1,8 +1,10 @@
 package com.example.moodapp.data.api
 
 import com.example.moodapp.models.addSongToPlaylist.AddSongToPlaylistResponse
+import com.example.moodapp.models.createPlaylist.CreatePlaylistResponse
 import com.example.moodapp.models.currentlyPlaying.CurrentTrackResponse
 import com.example.moodapp.models.userPlaylists.UserPlaylistsResponse
+import com.example.moodapp.models.userProfile.UserProfileResponse
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -28,7 +30,7 @@ interface SpotifyAPI {
     suspend fun getUserPlaylists(
         @Header("Authorization")
         token: String
-    ) : Response<UserPlaylistsResponse>
+    ): Response<UserPlaylistsResponse>
 
     // post currently playing song to user's mood playlist
     @POST("v1/playlists/{playlist_id}/tracks")
@@ -40,4 +42,21 @@ interface SpotifyAPI {
         @Query("uris")
         trackUri: String
     ): Response<AddSongToPlaylistResponse>
+
+    // Gets current user's profile details
+    @GET("v1/me")
+    suspend fun getUserProfile(
+        @Header("Authorization")
+        token: String
+    ): Response<UserProfileResponse>
+
+    // Create a new playlist
+    @POST("v1/users/{user_id}/playlists")
+    suspend fun createUserPlaylist(
+        @Header("Authorization")
+        token: String,
+        @Path("user_id")
+        userId: String,
+        @Body name: String
+    ): Response<CreatePlaylistResponse>
 }

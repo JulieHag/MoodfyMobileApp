@@ -17,4 +17,12 @@ class SpotifyRepository {
     //post currently playing song to users mood playlist
     suspend fun addToMoodPlaylist(token: String, playlistId: String, trackUri: String)=
         RetrofitInstance.api.addToMoodPlaylist(token, playlistId, trackUri)
+
+    // Gets current user's profile
+    suspend fun getUserProfile(token: String) =
+        RetrofitInstance.api.getUserProfile(token)
+
+    // Creates a new playlist
+    suspend fun createUserPlaylist(token: String, userId: String, name: String) =
+        RetrofitInstance.api.createUserPlaylist(token, userId, name)
 }
