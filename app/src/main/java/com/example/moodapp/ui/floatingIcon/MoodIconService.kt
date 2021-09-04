@@ -14,14 +14,24 @@ import android.widget.Toast
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import com.example.moodapp.R
+import com.example.moodapp.models.createPlaylistBody.CreatePlaylistBody
 import com.example.moodapp.repository.SpotifyRepository
+import com.example.moodapp.utils.Constants.Companion.AMUSED_MF
+import com.example.moodapp.utils.Constants.Companion.ANGRY_MF
+import com.example.moodapp.utils.Constants.Companion.CALM_MF
+import com.example.moodapp.utils.Constants.Companion.EXCITED_MF
 import com.example.moodapp.utils.Constants.Companion.HAPPY_MF
+import com.example.moodapp.utils.Constants.Companion.LOVE_MF
+import com.example.moodapp.utils.Constants.Companion.NOSTALGIC_MF
+import com.example.moodapp.utils.Constants.Companion.PRIDE_MF
 import com.example.moodapp.utils.Constants.Companion.SAD_MF
+import com.example.moodapp.utils.Constants.Companion.WONDER_MF
 import com.example.moodapp.utils.SessionManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
+import kotlin.properties.Delegates
 
 /**
  * Code for floating icon funtionality is adapted from https://drive.google.com/file/d/1fY9r9uNZ9JYcbFWInI3ivmOyZEsMURG_/view
@@ -39,6 +49,7 @@ class MoodIconService() : LifecycleService() {
     private lateinit var trackUri: String
     private lateinit var playlistId: String
     private lateinit var userId: String
+
 
 
     override fun onCreate() {
@@ -188,21 +199,65 @@ class MoodIconService() : LifecycleService() {
         //set onClick listeners for the mood tags
         val mood1 = floatingView.findViewById<Button>(R.id.mood_1)
         val mood2 = floatingView.findViewById<Button>(R.id.mood_2)
+        val mood3 = floatingView.findViewById<Button>(R.id.mood_3)
+        val mood4 = floatingView.findViewById<Button>(R.id.mood_4)
+        val mood5 = floatingView.findViewById<Button>(R.id.mood_5)
+        val mood6 = floatingView.findViewById<Button>(R.id.mood_6)
+        val mood7 = floatingView.findViewById<Button>(R.id.mood_7)
+        val mood8 = floatingView.findViewById<Button>(R.id.mood_8)
+        val mood9 = floatingView.findViewById<Button>(R.id.mood_9)
+        val mood10 = floatingView.findViewById<Button>(R.id.mood_10)
 
 
         mood1.setOnClickListener {
             playlistName = HAPPY_MF
             //Toast.makeText(applicationContext, "${sessionManager.fetchAuthToken()}", Toast.LENGTH_SHORT).show()
-
-            getUserPlaylists("Bearer ${sessionManager.fetchAuthToken()}")
-
-
+            getCurrentTrack("Bearer ${sessionManager.fetchAuthToken()}","GB")
+            //getUserPlaylists("Bearer ${sessionManager.fetchAuthToken()}")
         }
 
         mood2.setOnClickListener {
             playlistName = SAD_MF
             getUserPlaylists("Bearer ${sessionManager.fetchAuthToken()}")
+        }
 
+        mood3.setOnClickListener {
+            playlistName = ANGRY_MF
+            getUserPlaylists("Bearer ${sessionManager.fetchAuthToken()}")
+        }
+        mood4.setOnClickListener {
+            playlistName = CALM_MF
+            getUserPlaylists("Bearer ${sessionManager.fetchAuthToken()}")
+        }
+
+        mood5.setOnClickListener {
+            playlistName = EXCITED_MF
+            getUserPlaylists("Bearer ${sessionManager.fetchAuthToken()}")
+        }
+
+        mood6.setOnClickListener {
+            playlistName = NOSTALGIC_MF
+            getUserPlaylists("Bearer ${sessionManager.fetchAuthToken()}")
+        }
+
+        mood7.setOnClickListener {
+            playlistName = LOVE_MF
+            getUserPlaylists("Bearer ${sessionManager.fetchAuthToken()}")
+        }
+
+        mood8.setOnClickListener {
+            playlistName = PRIDE_MF
+            getUserPlaylists("Bearer ${sessionManager.fetchAuthToken()}")
+        }
+
+        mood9.setOnClickListener {
+            playlistName = WONDER_MF
+            getUserPlaylists("Bearer ${sessionManager.fetchAuthToken()}")
+        }
+
+        mood10.setOnClickListener {
+            playlistName = AMUSED_MF
+            getUserPlaylists("Bearer ${sessionManager.fetchAuthToken()}")
         }
 
 
@@ -240,6 +295,7 @@ class MoodIconService() : LifecycleService() {
      *
      */
     private fun getCurrentTrack(token: String, marketCode: String) = lifecycleScope.launch {
+        var isPlayling : Boolean
 
         val trackResponse = try {
             // Because getCurrentTrack is a suspend function in SpotifyAPI, code will only continue once current track has been retrieved from api
@@ -252,11 +308,19 @@ class MoodIconService() : LifecycleService() {
             return@launch
         }
 
+        //successful response and the body is not null
         if (trackResponse.isSuccessful && trackResponse.body() != null) {
-            //successful response and the body is not null
-            trackUri = trackResponse.body()!!.item.uri
+            //check that is playing a track or podcast etc, not an advert
+            var currentTrackItem = trackResponse.body()!!.item
+            //check if track is currently playing
+            isPlayling = trackResponse.body()!!.is_playing
 
-            //Toast.makeText(applicationContext, "hello", Toast.LENGTH_SHORT)
+            if(isPlayling && currentTrackItem!=null){
+                trackUri = trackResponse.body()!!.item.uri
+                getUserPlaylists("Bearer ${sessionManager.fetchAuthToken()}")
+            } else{
+                Toast.makeText(applicationContext, "Can't add to playlist. Try playing music in Spotify before clicking mood icon.", Toast.LENGTH_LONG).show()
+            }
 
 
         } else {
@@ -300,10 +364,10 @@ class MoodIconService() : LifecycleService() {
             }
 
             if (havePlaylist) {
-                getCurrentTrack("Bearer ${sessionManager.fetchAuthToken()}", "GB")
+                //getCurrentTrack("Bearer ${sessionManager.fetchAuthToken()}", "GB")
                 //1 second delay to make sure getCurrentTrack completes before accessing trackUri
-                delay(1000L)
-                Log.d(TAG, " have playlist $playlistId")
+                //delay(500L)
+                //Log.d(TAG, " have playlist $playlistId")
                 // post currently playing song to playlist
                 addToMoodPlaylist(
                     "Bearer ${sessionManager.fetchAuthToken()}",
@@ -312,12 +376,30 @@ class MoodIconService() : LifecycleService() {
                 )
             } else {
 
+
                 // User doesn't have mood playlist created yet. Have to get user id and then create a new playlist with current song being added to it
                 getUserProfile("Bearer ${sessionManager.fetchAuthToken()}")
-                delay(1000L)
-               // Log.d(TAG, "$userId")
-                Log.d(TAG, "Don't have playlist")
-                createUserPlaylist("Bearer ${sessionManager.fetchAuthToken()}", userId, "name: $playlistName")
+
+                // Log.d(TAG, "$userId")
+                //Log.d(TAG, "Don't have playlist")
+                delay(500L)
+                createUserPlaylist(
+                    "Bearer ${sessionManager.fetchAuthToken()}",
+                    userId,
+                    CreatePlaylistBody("Your $playlistName playlist", "$playlistName")
+                )
+
+                //get current track
+                //getCurrentTrack("Bearer ${sessionManager.fetchAuthToken()}", "GB")
+                // Delay to wait for playlistId to be instantiated in createUserPlaylist
+                delay(500L)
+                //add to newly created playlist
+                addToMoodPlaylist(
+                    "Bearer ${sessionManager.fetchAuthToken()}",
+                    playlistId,
+                    trackUri
+                )
+
             }
 
 
@@ -370,10 +452,14 @@ class MoodIconService() : LifecycleService() {
         }
     }
 
-    private fun createUserPlaylist(token: String, userId: String, name: String) =
+    private fun createUserPlaylist(
+        token: String,
+        userId: String,
+        createPlaylistBody: CreatePlaylistBody
+    ) =
         lifecycleScope.launch {
             val createPlaylistResponse = try {
-                spotifyRepository.createUserPlaylist(token, userId, name)
+                spotifyRepository.createUserPlaylist(token, userId, createPlaylistBody)
             } catch (e: IOException) {
                 Log.e(TAG, "IOException, you may not have internet connection")
                 return@launch
@@ -382,8 +468,9 @@ class MoodIconService() : LifecycleService() {
                 return@launch
             }
 
-            if(createPlaylistResponse.isSuccessful && createPlaylistResponse.body() != null){
-                Log.d(TAG, "Success! Created new playlist")
+            if (createPlaylistResponse.isSuccessful && createPlaylistResponse.body() != null) {
+                playlistId = createPlaylistResponse.body()!!.id
+
             } else {
                 Log.e(TAG, "Response not successful")
             }

@@ -1,6 +1,7 @@
 package com.example.moodapp.repository
 
 import com.example.moodapp.data.api.RetrofitInstance
+import com.example.moodapp.models.createPlaylistBody.CreatePlaylistBody
 
 class SpotifyRepository {
 
@@ -23,6 +24,6 @@ class SpotifyRepository {
         RetrofitInstance.api.getUserProfile(token)
 
     // Creates a new playlist
-    suspend fun createUserPlaylist(token: String, userId: String, name: String) =
-        RetrofitInstance.api.createUserPlaylist(token, userId, name)
+    suspend fun createUserPlaylist(token: String, userId: String, createPlaylistBody: CreatePlaylistBody) =
+        RetrofitInstance.api.createUserPlaylist(token, userId, createPlaylistBody )
 }

@@ -2,6 +2,7 @@ package com.example.moodapp.data.api
 
 import com.example.moodapp.models.addSongToPlaylist.AddSongToPlaylistResponse
 import com.example.moodapp.models.createPlaylist.CreatePlaylistResponse
+import com.example.moodapp.models.createPlaylistBody.CreatePlaylistBody
 import com.example.moodapp.models.currentlyPlaying.CurrentTrackResponse
 import com.example.moodapp.models.userPlaylists.UserPlaylistsResponse
 import com.example.moodapp.models.userProfile.UserProfileResponse
@@ -57,6 +58,6 @@ interface SpotifyAPI {
         token: String,
         @Path("user_id")
         userId: String,
-        @Body name: String
+        @Body createPlaylistBody: CreatePlaylistBody
     ): Response<CreatePlaylistResponse>
 }
