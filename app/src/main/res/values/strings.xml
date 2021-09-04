@@ -13,4 +13,15 @@
     <string name="ok">OK</string>
     <string name="permission_granted">Permission is granted. You can start Moodfying your music now.</string>
 
+    <string name="Happy">Happy</string>
+    <string name="Sad">Sad</string>
+    <string name="Nostalgic">Nostalgic</string>
+    <string name="Love">Love</string>
+    <string name="Excited">Excited</string>
+    <string name="Calm">Calm</string>
+    <string name="Pride">Pride</string>
+    <string name="Angry">Angry</string>
+    <string name="Wonder">Wonder</string>
+    <string name="Amused">Amused</string>
+
 </resources>
