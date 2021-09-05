@@ -151,9 +151,8 @@
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="320dp"
-                    android:layout_marginLeft="130dp"
                     android:drawableTop="@drawable/ic_face"
-                    android:text="@string/Amused"
+                    android:text="@string/Wonder"
                     android:textColor="@color/white"
                     android:background="@drawable/mood_icon_bg" />
 
@@ -162,10 +161,13 @@
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="320dp"
+                    android:layout_marginLeft="130dp"
                     android:drawableTop="@drawable/ic_face"
-                    android:text="@string/Wonder"
+                    android:text="@string/Amused"
                     android:textColor="@color/white"
                     android:background="@drawable/mood_icon_bg" />
+
+
 
 
 

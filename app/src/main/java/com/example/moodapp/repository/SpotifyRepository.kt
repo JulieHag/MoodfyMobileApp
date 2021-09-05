@@ -26,4 +26,9 @@ class SpotifyRepository {
     // Creates a new playlist
     suspend fun createUserPlaylist(token: String, userId: String, createPlaylistBody: CreatePlaylistBody) =
         RetrofitInstance.api.createUserPlaylist(token, userId, createPlaylistBody )
+
+    //set custom image for playlist
+    /**
+    suspend fun uploadCustomImage(token: String, playlistId: String, customImage: String) =
+        RetrofitInstance.api.uploadCustomImage(token, playlistId, customImage)**/
 }
