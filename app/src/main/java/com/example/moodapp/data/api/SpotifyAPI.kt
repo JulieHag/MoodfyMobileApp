@@ -62,16 +62,5 @@ interface SpotifyAPI {
     ): Response<CreatePlaylistResponse>
 
 
-    /**
-// To upload custom image to mood playlist
-    @PUT("v1/playlists/{playlist_id}/images")
-    suspend fun uploadCustomImage(
-    @Header("Authorization")
-    token: String,
-    @Header("Accept: image/jpeg")
-    @Path("playlist_id")
-    playlistId: String,
-    @Body customImage: String
-// No json response returned from api
-    ): Response<Void> **/
+
 }
