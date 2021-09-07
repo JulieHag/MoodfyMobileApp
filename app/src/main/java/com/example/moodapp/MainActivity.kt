@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
     val TAG = "MainActivity"
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -58,32 +57,23 @@ class MainActivity : AppCompatActivity() {
             AuthenticationResponse.Type.TOKEN,
             REDIRECT_URI
         )
-        builder.setScopes(arrayOf("user-read-currently-playing", "user-read-playback-state", "playlist-modify-public", "playlist-modify-private", "ugc-image-upload"))
+        builder.setScopes(
+            arrayOf(
+                "user-read-currently-playing",
+                "user-read-playback-state",
+                "playlist-modify-public",
+                "playlist-modify-private",
+                "ugc-image-upload"
+            )
+        )
         //to give user chance to log out
         builder.setShowDialog(true)
         val request = builder.build()
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request)
 
-        /**
-        val request = getAuthenticationRequest(AuthenticationResponse.Type.TOKEN)
-        AuthenticationClient.openLoginActivity(
-        this,
-        Constants.REQUEST_CODE,
-        request
-        ) **/
 
 
     }
-
-
-    /**
-    private fun getAuthenticationRequest(type: AuthenticationResponse.Type): AuthenticationRequest{
-    return AuthenticationRequest.Builder(CLIENT_ID, type, REDIRECT_URI)
-    .setShowDialog(false)
-    .setScopes(arrayOf("streaming"))
-    .build()
-
-    } **/
 
 
     /**
@@ -118,6 +108,7 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
+
 
     override fun onStart() {
         super.onStart()

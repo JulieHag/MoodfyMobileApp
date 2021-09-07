@@ -39,7 +39,9 @@ import java.util.*
 
 class MoodIconService() : LifecycleService() {
 
+    //for debug log
     val TAG = "MoodIconService"
+    //vars
     private lateinit var windowManager: WindowManager
     private lateinit var params: WindowManager.LayoutParams
     private lateinit var floatingView: View
@@ -54,14 +56,10 @@ class MoodIconService() : LifecycleService() {
     override fun onCreate() {
         super.onCreate()
 
-        Toast.makeText(this, "Service created", Toast.LENGTH_SHORT).show()
-
-
         windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
-
-
         //inflate floating view
         floatingView = LayoutInflater.from(this).inflate(R.layout.service_mood_overlay, null)
+
 
         val layoutFlag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
@@ -295,7 +293,7 @@ class MoodIconService() : LifecycleService() {
             } else {
                 Toast.makeText(
                     applicationContext,
-                    "Can't add to playlist. Try playing music in Spotify before clicking mood icon.",
+                    "Can't add to playlist. Make sure music is playing in Spotify before clicking mood icon.",
                     Toast.LENGTH_LONG
                 ).show()
             }

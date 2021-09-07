@@ -68,9 +68,9 @@
                     android:id="@+id/mood_1"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:drawableTop="@drawable/ic_happy1"
+                    android:drawableTop="@drawable/ic_happy"
                     android:text="@string/Happy"
-                    android:textColor="@color/white"
+                    android:textColor="@color/green_light"
                     android:background="@drawable/mood_icon_bg" />
 
                 <Button
@@ -78,9 +78,9 @@
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="130dp"
-                    android:drawableTop="@drawable/ic_sad1"
+                    android:drawableTop="@drawable/ic_sad"
                     android:text="@string/Sad"
-                    android:textColor="@color/white"
+                    android:textColor="@color/green_light"
                     android:background="@drawable/mood_icon_bg"
                     />
 
@@ -88,84 +88,93 @@
                     android:id="@+id/mood_3"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="80dp"
-                    android:drawableTop="@drawable/ic_anxiety"
+                    android:layout_below="@+id/mood_1"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/mood_icon_bg"
+                    android:drawableTop="@drawable/ic_proud"
                     android:text="@string/Pride"
-                    android:textColor="@color/white"
-                    android:background="@drawable/mood_icon_bg" />
+                    android:textColor="@color/green_light" />
 
                 <Button
                     android:id="@+id/mood_4"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="80dp"
+                    android:layout_below="@+id/mood_2"
                     android:layout_marginLeft="130dp"
-                    android:drawableTop="@drawable/ic_calm1"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/mood_icon_bg"
+                    android:drawableTop="@drawable/ic_calm"
                     android:text="@string/Calm"
-                    android:textColor="@color/white"
-                    android:background="@drawable/mood_icon_bg" />
+                    android:textColor="@color/green_light" />
 
                 <Button
                     android:id="@+id/mood_5"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="160dp"
-                    android:drawableTop="@drawable/ic_excited1"
+                    android:layout_below="@+id/mood_3"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/mood_icon_bg"
+                    android:drawableTop="@drawable/ic_excited"
                     android:text="@string/Excited"
-                    android:textColor="@color/white"
-                    android:background="@drawable/mood_icon_bg" />
+                    android:textColor="@color/green_light" />
 
                 <Button
                     android:id="@+id/mood_6"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="160dp"
+                    android:layout_below="@+id/mood_4"
                     android:layout_marginLeft="130dp"
-                    android:drawableTop="@drawable/ic_face"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/mood_icon_bg"
+                    android:drawableTop="@drawable/ic_love"
                     android:text="@string/Love"
-                    android:textColor="@color/white"
-                    android:background="@drawable/mood_icon_bg" />
+                    android:textColor="@color/green_light" />
 
                 <Button
                     android:id="@+id/mood_7"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="240dp"
-                    android:drawableTop="@drawable/ic_face"
+                    android:layout_below="@+id/mood_5"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/mood_icon_bg"
+                    android:drawableTop="@drawable/ic_angry"
                     android:text="@string/Angry"
-                    android:textColor="@color/white"
-                    android:background="@drawable/mood_icon_bg" />
+                    android:textColor="@color/green_light" />
+
                 <Button
                     android:id="@+id/mood_8"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="240dp"
+                    android:layout_below="@+id/mood_6"
                     android:layout_marginLeft="130dp"
-                    android:drawableTop="@drawable/ic_face"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/mood_icon_bg"
+                    android:drawableTop="@drawable/ic_nostaligic"
                     android:text="@string/Nostalgic"
-                    android:textColor="@color/white"
-                    android:background="@drawable/mood_icon_bg" />
+                    android:textColor="@color/green_light" />
 
                 <Button
                     android:id="@+id/mood_9"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="320dp"
-                    android:drawableTop="@drawable/ic_face"
+                    android:layout_below="@+id/mood_7"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/mood_icon_bg"
+                    android:drawableTop="@drawable/ic_wonder"
                     android:text="@string/Wonder"
-                    android:textColor="@color/white"
-                    android:background="@drawable/mood_icon_bg" />
+                    android:textColor="@color/green_light" />
 
                 <Button
                     android:id="@+id/mood_10"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="320dp"
+                    android:layout_below="@+id/mood_8"
                     android:layout_marginLeft="130dp"
-                    android:drawableTop="@drawable/ic_face"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/mood_icon_bg"
+                    android:drawableTop="@drawable/ic_amused"
                     android:text="@string/Amused"
-                    android:textColor="@color/white"
-                    android:background="@drawable/mood_icon_bg" />
+                    android:textColor="@color/green_light" />
 
 
 
