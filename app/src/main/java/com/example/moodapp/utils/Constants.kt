@@ -22,6 +22,11 @@ class Constants {
         const val WONDER_MF = "WONDER_MF"
         const val AMUSED_MF = "AMUSED_MF"
 
+        //constants for notification channel
+        const val NOTIFICATION_CHANNEL_ID = "moodfy_channel"
+        const val NOTIFICATION_CHANNEL_NAME ="Moodfy"
+        const val NOTIFICATION_ID = 1
+
 
 
 

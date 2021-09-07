@@ -1,5 +1,8 @@
 package com.example.moodapp.ui.floatingIcon
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.NotificationManager.IMPORTANCE_LOW
 import android.content.Context
 import android.content.Intent
 import android.graphics.PixelFormat
@@ -10,6 +13,8 @@ import android.view.*
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import com.example.moodapp.R
@@ -22,6 +27,9 @@ import com.example.moodapp.utils.Constants.Companion.EXCITED_MF
 import com.example.moodapp.utils.Constants.Companion.HAPPY_MF
 import com.example.moodapp.utils.Constants.Companion.LOVE_MF
 import com.example.moodapp.utils.Constants.Companion.NOSTALGIC_MF
+import com.example.moodapp.utils.Constants.Companion.NOTIFICATION_CHANNEL_ID
+import com.example.moodapp.utils.Constants.Companion.NOTIFICATION_CHANNEL_NAME
+import com.example.moodapp.utils.Constants.Companion.NOTIFICATION_ID
 import com.example.moodapp.utils.Constants.Companion.PRIDE_MF
 import com.example.moodapp.utils.Constants.Companion.SAD_MF
 import com.example.moodapp.utils.Constants.Companion.WONDER_MF
@@ -34,6 +42,9 @@ import java.util.*
 
 
 /**
+ * Made service foreground service so that it can't be killed by android system
+ * extends LifecycleService to have access to lifecycleScope which is used to start coroutines
+ * that will automatically be cancelled when the Service is stopped (for network calls).
  * Code for floating icon funtionality is adapted from https://drive.google.com/file/d/1fY9r9uNZ9JYcbFWInI3ivmOyZEsMURG_/view
  */
 
@@ -41,6 +52,7 @@ class MoodIconService() : LifecycleService() {
 
     //for debug log
     val TAG = "MoodIconService"
+
     //vars
     private lateinit var windowManager: WindowManager
     private lateinit var params: WindowManager.LayoutParams
@@ -59,6 +71,8 @@ class MoodIconService() : LifecycleService() {
         windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
         //inflate floating view
         floatingView = LayoutInflater.from(this).inflate(R.layout.service_mood_overlay, null)
+
+        startForegroundService()
 
 
         val layoutFlag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -161,6 +175,43 @@ class MoodIconService() : LifecycleService() {
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
+    }
+
+    /**
+     * Make service foreground service so that android system can't kill service
+     */
+    private fun startForegroundService() {
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE)
+                as NotificationManager
+
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            createmNotificationChannel(notificationManager)
+        }
+
+        val notificationBuilder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+                //always want notification to be active
+            .setAutoCancel(false)
+            .setOngoing(true) //notification can't be swiped away
+            .setSmallIcon(R.drawable.ic_mf_tab)
+            .setContentTitle("Moodfy App")
+            .setContentText("Moodfying your music")
+
+        startForeground(NOTIFICATION_ID, notificationBuilder.build())
+
+    }
+
+    /**
+     * Notification channel for foreground service
+     * IMORTANCE_LOW so that notification doesn't come with a sound
+     */
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createmNotificationChannel(notificationManager: NotificationManager) {
+        val channel = NotificationChannel(
+            NOTIFICATION_CHANNEL_ID,
+            NOTIFICATION_CHANNEL_NAME,
+            IMPORTANCE_LOW
+        )
+        notificationManager.createNotificationChannel(channel)
     }
 
 
@@ -300,6 +351,11 @@ class MoodIconService() : LifecycleService() {
 
 
         } else {
+            Toast.makeText(
+                applicationContext,
+                "Can't add to playlist. Make sure music is playing in Spotify before clicking mood icon.",
+                Toast.LENGTH_LONG
+            ).show()
             Log.e(TAG, "Response not successful")
         }
     }
@@ -469,7 +525,6 @@ class MoodIconService() : LifecycleService() {
                 Log.e(TAG, "Response not successful")
             }
         }
-
 
 
 }

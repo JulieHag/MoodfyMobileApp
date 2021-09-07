@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     //internet permission needed for requests to API
     <uses-permission android:name="android.permission.INTERNET"/>
-
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_mf_icon_square"
@@ -31,7 +31,8 @@
         <activity android:name="com.spotify.sdk.android.authentication.LoginActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <!--for overlay service -->
-        <service android:name=".ui.floatingIcon.MoodIconService" />
+        <service android:name=".ui.floatingIcon.MoodIconService"
+            android:foregroundServiceType="mediaProjection"/>
     </application>
 
 </manifest>
