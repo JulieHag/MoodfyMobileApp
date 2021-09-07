@@ -38,7 +38,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
-import java.util.*
 
 
 /**
@@ -48,7 +47,7 @@ import java.util.*
  * Code for floating icon funtionality is adapted from https://drive.google.com/file/d/1fY9r9uNZ9JYcbFWInI3ivmOyZEsMURG_/view
  */
 
-class MoodIconService() : LifecycleService() {
+class MoodIconService : LifecycleService() {
 
     //for debug log
     val TAG = "MoodIconService"
@@ -113,7 +112,7 @@ class MoodIconService() : LifecycleService() {
             private var initialY = 0
             private var initialTouchX = 0.0f
             private var initialTouchY = 0.0f
-            var intent: Intent? = null
+
 
 
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
@@ -185,11 +184,11 @@ class MoodIconService() : LifecycleService() {
                 as NotificationManager
 
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
-            createmNotificationChannel(notificationManager)
+            createNotificationChannel(notificationManager)
         }
 
         val notificationBuilder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-                //always want notification to be active
+            //always want notification to be active
             .setAutoCancel(false)
             .setOngoing(true) //notification can't be swiped away
             .setSmallIcon(R.drawable.ic_mf_tab)
@@ -205,7 +204,7 @@ class MoodIconService() : LifecycleService() {
      * IMORTANCE_LOW so that notification doesn't come with a sound
      */
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun createmNotificationChannel(notificationManager: NotificationManager) {
+    private fun createNotificationChannel(notificationManager: NotificationManager) {
         val channel = NotificationChannel(
             NOTIFICATION_CHANNEL_ID,
             NOTIFICATION_CHANNEL_NAME,
@@ -259,9 +258,8 @@ class MoodIconService() : LifecycleService() {
 
         mood1.setOnClickListener {
             playlistName = HAPPY_MF
-            //Toast.makeText(applicationContext, "${sessionManager.fetchAuthToken()}", Toast.LENGTH_SHORT).show()
             getCurrentTrack("Bearer ${sessionManager.fetchAuthToken()}", "GB")
-            //getUserPlaylists("Bearer ${sessionManager.fetchAuthToken()}")
+
         }
 
         mood2.setOnClickListener {
@@ -318,7 +316,7 @@ class MoodIconService() : LifecycleService() {
      *
      */
     private fun getCurrentTrack(token: String, marketCode: String) = lifecycleScope.launch {
-        var isPlayling: Boolean
+        var isPlaying: Boolean
 
         val trackResponse = try {
             // Because getCurrentTrack is a suspend function in SpotifyAPI, code will only continue once current track has been retrieved from api
@@ -336,9 +334,9 @@ class MoodIconService() : LifecycleService() {
             //check that is playing a track or podcast etc, not an advert
             var currentTrackItem = trackResponse.body()!!.item
             //check if track is currently playing
-            isPlayling = trackResponse.body()!!.is_playing
+            isPlaying = trackResponse.body()!!.is_playing
 
-            if (isPlayling && currentTrackItem != null) {
+            if (isPlaying && currentTrackItem != null) {
                 trackUri = trackResponse.body()!!.item.uri
                 getUserPlaylists("Bearer ${sessionManager.fetchAuthToken()}")
             } else {
@@ -396,9 +394,6 @@ class MoodIconService() : LifecycleService() {
             }
 
             if (havePlaylist) {
-                //getCurrentTrack("Bearer ${sessionManager.fetchAuthToken()}", "GB")
-                //1 second delay to make sure getCurrentTrack completes before accessing trackUri
-                //delay(500L)
                 Log.d(TAG, " have playlist $playlistId")
                 // post currently playing song to playlist
                 addToMoodPlaylist(
@@ -412,17 +407,15 @@ class MoodIconService() : LifecycleService() {
                 // User doesn't have mood playlist created yet. Have to get user id and then create a new playlist with current song being added to it
                 getUserProfile("Bearer ${sessionManager.fetchAuthToken()}")
 
-                // Log.d(TAG, "$userId")
-                //Log.d(TAG, "Don't have playlist")
+
                 delay(500L)
                 createUserPlaylist(
                     "Bearer ${sessionManager.fetchAuthToken()}",
                     userId,
-                    CreatePlaylistBody("Your $playlistName playlist", "$playlistName")
+                    CreatePlaylistBody("Your $playlistName playlist", playlistName)
                 )
 
                 //get current track
-                //getCurrentTrack("Bearer ${sessionManager.fetchAuthToken()}", "GB")
                 // Delay to wait for playlistId to be instantiated in createUserPlaylist
                 delay(500L)
                 Log.d(TAG, " created playlist $playlistId")
@@ -525,6 +518,7 @@ class MoodIconService() : LifecycleService() {
                 Log.e(TAG, "Response not successful")
             }
         }
+
 
 
 }
