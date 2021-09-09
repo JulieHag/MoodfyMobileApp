@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.moodapp">
 
-    //overlay permission needed for floating view
+    <!--overlay permission needed for floating view-->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    //internet permission needed for requests to API
+    <!--internet permission needed for requests to API-->
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <application

@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 
 class MoodMusicViewModel : ViewModel() {
     private val _text = MutableLiveData<String>().apply {
-        value = "This is mood music Fragment"
+        value = ""
     }
     val text: LiveData<String> = _text
 
