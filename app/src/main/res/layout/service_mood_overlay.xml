@@ -71,7 +71,7 @@
                     android:drawableTop="@drawable/ic_happy"
                     android:text="@string/Happy"
                     android:textColor="@color/green_light"
-                    android:background="@drawable/mood_icon_bg" />
+                    android:background="@drawable/button_custom" />
 
                 <Button
                     android:id="@+id/mood_2"
@@ -81,7 +81,7 @@
                     android:drawableTop="@drawable/ic_sad"
                     android:text="@string/Sad"
                     android:textColor="@color/green_light"
-                    android:background="@drawable/mood_icon_bg"
+                    android:background="@drawable/button_custom"
                     />
 
                 <Button
@@ -90,7 +90,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/mood_1"
                     android:layout_marginTop="15dp"
-                    android:background="@drawable/mood_icon_bg"
+                    android:background="@drawable/button_custom"
                     android:drawableTop="@drawable/ic_proud"
                     android:text="@string/Pride"
                     android:textColor="@color/green_light" />
@@ -102,7 +102,7 @@
                     android:layout_below="@+id/mood_2"
                     android:layout_marginLeft="130dp"
                     android:layout_marginTop="15dp"
-                    android:background="@drawable/mood_icon_bg"
+                    android:background="@drawable/button_custom"
                     android:drawableTop="@drawable/ic_calm"
                     android:text="@string/Calm"
                     android:textColor="@color/green_light" />
@@ -113,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/mood_3"
                     android:layout_marginTop="15dp"
-                    android:background="@drawable/mood_icon_bg"
+                    android:background="@drawable/button_custom"
                     android:drawableTop="@drawable/ic_excited"
                     android:text="@string/Excited"
                     android:textColor="@color/green_light" />
@@ -125,7 +125,7 @@
                     android:layout_below="@+id/mood_4"
                     android:layout_marginLeft="130dp"
                     android:layout_marginTop="15dp"
-                    android:background="@drawable/mood_icon_bg"
+                    android:background="@drawable/button_custom"
                     android:drawableTop="@drawable/ic_love"
                     android:text="@string/Love"
                     android:textColor="@color/green_light" />
@@ -136,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/mood_5"
                     android:layout_marginTop="15dp"
-                    android:background="@drawable/mood_icon_bg"
+                    android:background="@drawable/button_custom"
                     android:drawableTop="@drawable/ic_angry"
                     android:text="@string/Angry"
                     android:textColor="@color/green_light" />
@@ -148,7 +148,7 @@
                     android:layout_below="@+id/mood_6"
                     android:layout_marginLeft="130dp"
                     android:layout_marginTop="15dp"
-                    android:background="@drawable/mood_icon_bg"
+                    android:background="@drawable/button_custom"
                     android:drawableTop="@drawable/ic_nostaligic"
                     android:text="@string/Nostalgic"
                     android:textColor="@color/green_light" />
@@ -159,7 +159,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/mood_7"
                     android:layout_marginTop="15dp"
-                    android:background="@drawable/mood_icon_bg"
+                    android:background="@drawable/button_custom"
                     android:drawableTop="@drawable/ic_wonder"
                     android:text="@string/Wonder"
                     android:textColor="@color/green_light" />
@@ -171,7 +171,7 @@
                     android:layout_below="@+id/mood_8"
                     android:layout_marginLeft="130dp"
                     android:layout_marginTop="15dp"
-                    android:background="@drawable/mood_icon_bg"
+                    android:background="@drawable/button_custom"
                     android:drawableTop="@drawable/ic_amused"
                     android:text="@string/Amused"
                     android:textColor="@color/green_light" />
