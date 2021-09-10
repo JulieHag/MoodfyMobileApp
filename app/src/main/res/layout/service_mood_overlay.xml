@@ -51,12 +51,18 @@
 
         </RelativeLayout>
 
+
         <!-- Mood tag root container -->
         <RelativeLayout
             android:id="@+id/mood_tags_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone">
+
+            <!--Allows mood tags to be scrollable when screen size too small i.e. when landscape-->
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
             <RelativeLayout
                 android:id="@+id/mood_tags"
@@ -68,21 +74,20 @@
                     android:id="@+id/mood_1"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/button_custom"
                     android:drawableTop="@drawable/ic_happy"
                     android:text="@string/Happy"
-                    android:textColor="@color/green_light"
-                    android:background="@drawable/button_custom" />
+                    android:textColor="@color/green_light" />
 
                 <Button
                     android:id="@+id/mood_2"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="130dp"
+                    android:background="@drawable/button_custom"
                     android:drawableTop="@drawable/ic_sad"
                     android:text="@string/Sad"
-                    android:textColor="@color/green_light"
-                    android:background="@drawable/button_custom"
-                    />
+                    android:textColor="@color/green_light" />
 
                 <Button
                     android:id="@+id/mood_3"
@@ -177,18 +182,8 @@
                     android:textColor="@color/green_light" />
 
 
-
-
-
-
-
-
-
-
-
-
-
             </RelativeLayout>
+            </ScrollView>
 
             <!-- minimise button -->
             <ImageView
@@ -200,5 +195,5 @@
                 tools:ignore="ContentDescription" />
 
         </RelativeLayout>
-    </RelativeLayout>
-</FrameLayout>
+
+</RelativeLayout></FrameLayout>
