@@ -16,5 +16,10 @@
         android:name="com.example.moodapp.ui.moodMusic.MoodMusicFragment"
         android:label="@string/title_mood_music"
         tools:layout="@layout/fragment_mood_music" />
+    <fragment
+        android:id="@+id/navigation_mood_library"
+        android:name="com.example.moodapp.ui.moodLibrary.MoodLibraryFragment"
+        android:label="@string/title_mood_library"
+        tools:layout="@layout/fragment_mood_library" />
 
 </navigation>

@@ -10,4 +10,5 @@ class HomeViewModel : ViewModel() {
         value = "Moodfy. Where Mood meets music."
     }
     val text: LiveData<String> = _text
+
 }

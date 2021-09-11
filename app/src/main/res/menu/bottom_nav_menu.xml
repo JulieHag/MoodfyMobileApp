@@ -9,6 +9,10 @@
         android:id="@+id/navigation_mood_music"
         android:icon="@drawable/ic_mood_music_24"
         android:title="@string/title_mood_music" />
+    <item
+        android:id="@+id/navigation_mood_library"
+        android:icon="@drawable/ic_mood_library_24"
+        android:title="@string/title_mood_library"/>
 
 
 

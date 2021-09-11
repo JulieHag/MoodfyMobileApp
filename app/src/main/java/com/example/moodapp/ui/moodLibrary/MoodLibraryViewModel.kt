@@ -1,13 +1,54 @@
 package com.example.moodapp.ui.moodLibrary
 
-import androidx.lifecycle.LiveData
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.moodapp.models.userPlaylists.UserPlaylistsResponse
+import com.example.moodapp.repository.SpotifyRepository
+import com.example.moodapp.utils.Resource
+import com.example.moodapp.utils.SessionManager
+import kotlinx.coroutines.launch
+import retrofit2.Response
 
-class MoodLibraryViewModel : ViewModel() {
+class MoodLibraryViewModel(
+    val spotifyRepository: SpotifyRepository,
+    application: Application
+) : AndroidViewModel(application) {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is mood library Fragment"
+    val TAG = "MoodLibraryViewModel"
+    val userPlaylist: MutableLiveData<Resource<UserPlaylistsResponse>> = MutableLiveData()
+    private var sessionManager: SessionManager = SessionManager(application.applicationContext)
+
+    init {
+
+        getUserPlaylists("Bearer ${sessionManager.fetchAuthToken()}")
     }
-    val text: LiveData<String> = _text
+
+
+    /**
+     * coroutine stays alive only as long as view model stays alive
+     */
+    fun getUserPlaylists(token: String) = viewModelScope.launch {
+        val playlistResponse = spotifyRepository.getUserPlaylists(token)
+        //post the response success or error state to live data which fragment can observe
+        userPlaylist.postValue(handlePlaylistResponse(playlistResponse))
+
+
+    }
+
+
+    /**
+     * Function to handle the response from the api call and will return the succesful or error response
+     */
+    private fun handlePlaylistResponse(response: Response<UserPlaylistsResponse>) : Resource<UserPlaylistsResponse>{
+        if(response.isSuccessful){
+            //check body isn't null
+            response.body()?.let { resultResponse ->
+                return Resource.Success(resultResponse)
+
+            }
+        }
+        return Resource.Error(response.message())
+    }
 }

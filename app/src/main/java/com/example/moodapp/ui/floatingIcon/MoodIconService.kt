@@ -172,7 +172,7 @@ class MoodIconService : LifecycleService() {
         if (floatingView != null) windowManager.removeView(floatingView)
     }
 
-    override fun onBind(intent: Intent?): IBinder? {
+    override fun onBind(intent: Intent): IBinder? {
         return null
     }
 
