@@ -5,8 +5,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.moodapp.R
 import com.example.moodapp.databinding.PlaylistItemBinding
 import com.example.moodapp.models.userPlaylists.Item
+import com.example.moodapp.utils.Constants.Companion.AMUSED_MF
+import com.example.moodapp.utils.Constants.Companion.ANGRY_MF
+import com.example.moodapp.utils.Constants.Companion.CALM_MF
+import com.example.moodapp.utils.Constants.Companion.EXCITED_MF
+import com.example.moodapp.utils.Constants.Companion.HAPPY_MF
+import com.example.moodapp.utils.Constants.Companion.LOVE_MF
+import com.example.moodapp.utils.Constants.Companion.NOSTALGIC_MF
+import com.example.moodapp.utils.Constants.Companion.PRIDE_MF
+import com.example.moodapp.utils.Constants.Companion.SAD_MF
+import com.example.moodapp.utils.Constants.Companion.WONDER_MF
 
 /**
  * Adapter for recycler view
@@ -56,6 +67,21 @@ class PlaylistAdapter: RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder>(
         var playlistUri: String
         val playlistItem = differ.currentList[position]
         holder.binding.apply {
+
+            //set image for each playlist
+            when(playlistItem.name){
+                HAPPY_MF -> (itemImage.setImageResource(R.drawable.happy))
+                SAD_MF -> (itemImage.setImageResource(R.drawable.sad))
+                ANGRY_MF -> (itemImage.setImageResource(R.drawable.anger))
+                AMUSED_MF -> (itemImage.setImageResource(R.drawable.amused))
+                EXCITED_MF -> (itemImage.setImageResource(R.drawable.excited))
+                WONDER_MF -> (itemImage.setImageResource(R.drawable.wonder))
+                NOSTALGIC_MF -> (itemImage.setImageResource(R.drawable.nostalgic))
+                PRIDE_MF -> (itemImage.setImageResource(R.drawable.proud))
+                CALM_MF -> (itemImage.setImageResource(R.drawable.calm))
+                LOVE_MF -> (itemImage.setImageResource(R.drawable.love))
+            }
+
             itemTitle.text = playlistItem.name
             playlistUri = playlistItem.uri
             holder.itemView.setOnClickListener{

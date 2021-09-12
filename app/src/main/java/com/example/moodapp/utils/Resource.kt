@@ -13,5 +13,8 @@ sealed class Resource<T>(
     //data nullable here because can have a body in an error response but not always
     class Error<T>(message: String, data: T? = null) : Resource<T>(data, message)
 
+    //loading state
+    class Loading<T> : Resource<T>()
+
 }
 
