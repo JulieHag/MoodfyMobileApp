@@ -15,8 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="225dp"
         android:importantForAccessibility="no"
-        android:scaleType="centerCrop"
-        />
+        android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/item_title"
@@ -25,8 +24,7 @@
             android:padding="8dp"
             android:fontFamily="sans-serif"
             android:textColor="@color/white"
-            android:textAppearance="?attr/textAppearanceHeadline6"
-           />
+            android:textAppearance="?attr/textAppearanceHeadline6" />
 
     </LinearLayout>
 
