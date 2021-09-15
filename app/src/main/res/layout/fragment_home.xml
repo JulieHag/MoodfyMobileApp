@@ -6,258 +6,280 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
-
-    <TextView
-        android:id="@+id/text_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
-        android:textAlignment="center"
-        android:textSize="40sp"
-        android:textStyle="bold"
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.119" />
+        android:paddingBottom="10dp">
 
-    <ImageView
-        android:id="@+id/image_mf_icon"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@mipmap/ic_mf_icon"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.84" />
-
-    <ImageView
-        android:id="@+id/amused_home"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:src="@drawable/ic_amused"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.245"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.365" />
-
-    <ImageView
-        android:id="@+id/wonder_home"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-
-        android:src="@drawable/ic_wonder"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.852"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.56" />
-
-    <ImageView
-        android:id="@+id/nostalgic_home"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:src="@drawable/ic_nostaligic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.17"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/angry_home"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-
-        android:src="@drawable/ic_angry"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.557"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.417" />
-
-    <ImageView
-        android:id="@+id/love_home"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-
-        android:src="@drawable/ic_love"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.378"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.525" />
-
-    <ImageView
-        android:id="@+id/proud_home"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-
-        android:src="@drawable/ic_proud"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.566"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.587" />
-
-    <ImageView
-        android:id="@+id/excited_home"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:src="@drawable/ic_excited"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.725"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.65" />
-
-    <ImageView
-        android:id="@+id/calm_home"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:src="@drawable/ic_calm"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.841"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.427" />
-
-    <ImageView
-        android:id="@+id/happy_home"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:src="@drawable/ic_happy"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.32"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.65" />
-
-    <ImageView
-        android:id="@+id/sad_home"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:src="@drawable/ic_sad"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.735" />
-
-    <ImageView
-        android:id="@+id/music_note1"
-        android:layout_width="27dp"
-        android:layout_height="36dp"
-
-        android:src="@drawable/ic_music_note_green_main"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.588" />
-
-    <ImageView
-        android:id="@+id/music_note2"
-        android:layout_width="27dp"
-        android:layout_height="36dp"
-
-        android:src="@drawable/ic_music_note_purp_dark"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.532"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.652" />
-
-    <ImageView
-        android:id="@+id/music_note13"
-        android:layout_width="27dp"
-        android:layout_height="36dp"
-
-        android:src="@drawable/ic_music_note_purp_light"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.703"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.504" />
-
-    <ImageView
-        android:id="@+id/music_note4"
-        android:layout_width="27dp"
-        android:layout_height="36dp"
-
-        android:src="@drawable/ic_music_note_green_dark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.674"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.351" />
-
-    <ImageView
-        android:id="@+id/music_note5"
-        android:layout_width="27dp"
-        android:layout_height="36dp"
-        android:src="@drawable/ic_music_note_purp_main"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.674"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.754" />
-
-    <ImageView
-        android:id="@+id/music_note6"
-        android:layout_width="27dp"
-        android:layout_height="36dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="40dp"
+            >
 
 
-        android:src="@drawable/ic_music_note_green_main"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.383"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.425" />
+            <TextView
+                android:id="@+id/text_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.045" />
 
-    <ImageView
-        android:id="@+id/music_note7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_music_note_purp_light"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.343"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.724" />
+            <ImageView
+                android:id="@+id/amused_home"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:src="@drawable/ic_amused"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.156"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_home"
+                app:layout_constraintVertical_bias="0.05" />
 
-    <ImageView
-        android:id="@+id/music_note8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_music_note_green_dark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.097"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.421" />
+            <ImageView
+                android:id="@+id/wonder_home"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:src="@drawable/ic_wonder"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.907"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_home"
+                app:layout_constraintVertical_bias="0.098" />
+
+            <ImageView
+                android:id="@+id/nostalgic_home"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:src="@drawable/ic_nostaligic"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.508"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/amused_home"
+                app:layout_constraintVertical_bias="0.0" />
+
+
+            <ImageView
+                android:id="@+id/angry_home"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:src="@drawable/ic_angry"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.112"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/amused_home"
+                app:layout_constraintVertical_bias="0.095" />
+
+            <ImageView
+                android:id="@+id/love_home"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:src="@drawable/ic_love"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.103"
+                app:layout_constraintStart_toEndOf="@+id/angry_home"
+                app:layout_constraintTop_toBottomOf="@+id/nostalgic_home"
+                app:layout_constraintVertical_bias="0.115" />
+
+            <ImageView
+                android:id="@+id/proud_home"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:src="@drawable/ic_proud"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.281"
+                app:layout_constraintStart_toEndOf="@+id/love_home"
+                app:layout_constraintTop_toBottomOf="@+id/nostalgic_home"
+                app:layout_constraintVertical_bias="0.168" />
+
+            <ImageView
+                android:id="@+id/excited_home"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:src="@drawable/ic_excited"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.515"
+                app:layout_constraintStart_toEndOf="@+id/proud_home"
+                app:layout_constraintTop_toBottomOf="@+id/wonder_home"
+                app:layout_constraintVertical_bias="0.097" />
+
+
+            <ImageView
+                android:id="@+id/calm_home"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:src="@drawable/ic_calm"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.26"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/love_home"
+                app:layout_constraintVertical_bias="0.107" />
+
+            <ImageView
+                android:id="@+id/happy_home"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:src="@drawable/ic_happy"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.797"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/proud_home"
+                app:layout_constraintVertical_bias="0.062" />
+
+            <ImageView
+                android:id="@+id/sad_home"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:src="@drawable/ic_sad"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.52"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/calm_home"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <ImageView
+                android:id="@+id/image_mf_icon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@mipmap/ic_mf_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sad_home"
+                app:layout_constraintVertical_bias="0.24" />
+
+            <ImageView
+                android:id="@+id/music_note1"
+                android:layout_width="27dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_music_note_green_main"
+                app:layout_constraintBottom_toTopOf="@+id/calm_home"
+                app:layout_constraintEnd_toStartOf="@+id/love_home"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/angry_home" />
+
+            <ImageView
+                android:id="@+id/music_note2"
+                android:layout_width="27dp"
+                android:layout_height="36dp"
+                android:layout_marginBottom="35dp"
+                android:src="@drawable/ic_music_note_purp_dark"
+                app:layout_constraintBottom_toTopOf="@+id/sad_home"
+                app:layout_constraintEnd_toStartOf="@+id/happy_home"
+                app:layout_constraintHorizontal_bias="0.421"
+                app:layout_constraintStart_toEndOf="@+id/calm_home"
+                app:layout_constraintTop_toBottomOf="@+id/love_home"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <ImageView
+                android:id="@+id/music_note13"
+                android:layout_width="27dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_music_note_purp_light"
+                app:layout_constraintBottom_toBottomOf="@+id/image_mf_icon"
+                app:layout_constraintEnd_toStartOf="@+id/sad_home"
+                app:layout_constraintHorizontal_bias="0.691"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/calm_home"
+                app:layout_constraintVertical_bias="0.333" />
+
+            <ImageView
+                android:id="@+id/music_note4"
+                android:layout_width="27dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_music_note_green_dark"
+                app:layout_constraintBottom_toTopOf="@+id/wonder_home"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/amused_home"
+                app:layout_constraintTop_toBottomOf="@+id/text_home" />
+
+            <ImageView
+                android:id="@+id/music_note5"
+                android:layout_width="27dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_music_note_purp_main"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.442"
+                app:layout_constraintStart_toEndOf="@+id/image_mf_icon"
+                app:layout_constraintTop_toBottomOf="@+id/happy_home"
+                app:layout_constraintVertical_bias="0.148" />
+
+            <ImageView
+                android:id="@+id/music_note6"
+                android:layout_width="27dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_music_note_green_main"
+                app:layout_constraintBottom_toTopOf="@+id/love_home"
+                app:layout_constraintEnd_toStartOf="@+id/nostalgic_home"
+                app:layout_constraintStart_toEndOf="@+id/angry_home"
+                app:layout_constraintTop_toBottomOf="@+id/amused_home" />
+
+            <ImageView
+                android:id="@+id/music_note7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_music_note_purp_light"
+                app:layout_constraintBottom_toTopOf="@+id/proud_home"
+                app:layout_constraintEnd_toStartOf="@+id/excited_home"
+                app:layout_constraintStart_toEndOf="@+id/love_home"
+                app:layout_constraintTop_toBottomOf="@+id/nostalgic_home" />
+
+
+            <ImageView
+                android:id="@+id/music_note8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_music_note_green_dark"
+                app:layout_constraintBottom_toTopOf="@+id/angry_home"
+                app:layout_constraintEnd_toStartOf="@+id/amused_home"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_home" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
