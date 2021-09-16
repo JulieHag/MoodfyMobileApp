@@ -7,18 +7,18 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.moodapp.ui.home.HomeFragment"
+        android:name="com.jhag.moodapp.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_mood_music"
-        android:name="com.example.moodapp.ui.moodMusic.MoodMusicFragment"
+        android:name="com.jhag.moodapp.ui.moodMusic.MoodMusicFragment"
         android:label="@string/title_mood_music"
         tools:layout="@layout/fragment_mood_music" />
     <fragment
         android:id="@+id/navigation_mood_library"
-        android:name="com.example.moodapp.ui.moodLibrary.MoodLibraryFragment"
+        android:name="com.jhag.moodapp.ui.moodLibrary.MoodLibraryFragment"
         android:label="@string/title_mood_library"
         tools:layout="@layout/fragment_mood_library" />
 
