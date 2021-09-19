@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.jhag.moodapp.databinding.FragmentMoodMusicBinding
 import com.jhag.moodapp.ui.floatingIcon.MoodIconService
+import com.jhag.moodapp.utils.Constants
+import com.jhag.moodapp.utils.SessionManager
+import com.spotify.sdk.android.authentication.AuthenticationClient
+import com.spotify.sdk.android.authentication.AuthenticationRequest
+import com.spotify.sdk.android.authentication.AuthenticationResponse
 
 
 class MoodMusicFragment : Fragment() {
@@ -24,6 +30,7 @@ class MoodMusicFragment : Fragment() {
     val TAG = "MoodMusicFragment"
     private lateinit var moodMusicViewModel: MoodMusicViewModel
     private var _binding: FragmentMoodMusicBinding? = null
+    private lateinit var sessionManager: SessionManager
 
     val positiveButtonClick = { _: DialogInterface, _: Int ->
 
@@ -39,6 +46,11 @@ class MoodMusicFragment : Fragment() {
         }
 
 
+    }
+
+    val positiveButtonClick2= { _: DialogInterface, _: Int ->
+
+        spotifyAccess()
     }
 
     val negativeButtonClick = { _: DialogInterface, _: Int ->
@@ -97,16 +109,25 @@ class MoodMusicFragment : Fragment() {
     fun startMoodService() {
         var canDraw = true
         var intent: Intent? = null
+        sessionManager = SessionManager(requireContext())
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
-            canDraw = Settings.canDrawOverlays(requireContext())
-            if (!canDraw && intent != null) {
-                permissionAlert()
+        Log.d(TAG,  "${sessionManager.fetchAuthToken()}")
 
-            } else {
-                requireActivity().startService(Intent(context, MoodIconService::class.java))
-            }
+        if(sessionManager.fetchAuthToken() == null){
+           spotifyAccessAlert()
+        } else{
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
+                canDraw = Settings.canDrawOverlays(requireContext())
+                if (!canDraw && intent != null) {
+                    permissionAlert()
+
+                } else {
+                    requireActivity().startService(Intent(context, MoodIconService::class.java))
+                }
+        }
+
+
         }
 
 
@@ -140,6 +161,53 @@ class MoodMusicFragment : Fragment() {
             setNegativeButton("Cancel", negativeButtonClick)
             show()
         }
+
+    }
+
+    fun spotifyAccessAlert() {
+
+
+        val builder = AlertDialog.Builder(requireContext())
+        with(builder)
+        {
+            setTitle("Permission required")
+            setMessage("To use this feature of the app you must allow the app access to your Spotify account. Click OK to allow access.")
+            setPositiveButton(
+                "OK",
+                DialogInterface.OnClickListener(function = positiveButtonClick2)
+            )
+            setNegativeButton("Cancel", negativeButtonClick)
+            show()
+        }
+
+    }
+
+
+    /**
+     * Asks user for permission to access their spotify
+     */
+    fun spotifyAccess() {
+
+        // code adapted from spotify authentication guide
+        val builder = AuthenticationRequest.Builder(
+            Constants.CLIENT_ID,
+            AuthenticationResponse.Type.TOKEN,
+            Constants.REDIRECT_URI
+        )
+        builder.setScopes(
+            arrayOf(
+                "user-read-currently-playing",
+                "user-read-playback-state",
+                "playlist-modify-public",
+                "playlist-modify-private",
+                "ugc-image-upload"
+            )
+        )
+        //to give user chance to log out
+        builder.setShowDialog(true)
+        val request = builder.build()
+        AuthenticationClient.openLoginActivity(requireActivity(), Constants.REQUEST_CODE, request)
+
 
     }
 
