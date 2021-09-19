@@ -394,7 +394,7 @@ class MoodIconService : LifecycleService() {
             }
 
             if (havePlaylist) {
-                Log.d(TAG, " have playlist $playlistId")
+
                 // post currently playing song to playlist
                 addToMoodPlaylist(
                     "Bearer ${sessionManager.fetchAuthToken()}",
@@ -418,7 +418,7 @@ class MoodIconService : LifecycleService() {
                 //get current track
                 // Delay to wait for playlistId to be instantiated in createUserPlaylist
                 delay(500L)
-                Log.d(TAG, " created playlist $playlistId")
+
                 //add to newly created playlist
                 addToMoodPlaylist(
                     "Bearer ${sessionManager.fetchAuthToken()}",

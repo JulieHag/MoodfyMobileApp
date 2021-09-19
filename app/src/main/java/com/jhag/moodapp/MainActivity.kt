@@ -112,7 +112,6 @@ class MainActivity : AppCompatActivity() {
             when (response.type) {
                 AuthenticationResponse.Type.TOKEN -> {
                     //handle successful response - get requests from API
-                    Log.d(TAG, "Successful auth")
                     //save AUTH_TOKEN to session
                     sessionManager.saveAuthToken(response.accessToken)
 
@@ -121,13 +120,13 @@ class MainActivity : AppCompatActivity() {
 
                 AuthenticationResponse.Type.ERROR -> {
                     //Unsuccessful auth i.e user presses cancel
-                    Log.d(TAG, "Unsuccessful auth")
+                    //Log.d(TAG, "Unsuccessful auth")
                     loginPermissionAlert()
                 }
                 // Most likely auth flow was cancelled i.e. back button pressed
                 else -> {
                     // Handle other cases
-                    Log.d(TAG, "auth fow cancelled")
+                    //Log.d(TAG, "auth fow cancelled")
                     loginPermissionAlert()
                 }
             }

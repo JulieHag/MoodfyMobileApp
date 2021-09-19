@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -111,7 +110,7 @@ class MoodMusicFragment : Fragment() {
         var intent: Intent? = null
         sessionManager = SessionManager(requireContext())
 
-        Log.d(TAG,  "${sessionManager.fetchAuthToken()}")
+
 
         if(sessionManager.fetchAuthToken() == null){
            spotifyAccessAlert()
