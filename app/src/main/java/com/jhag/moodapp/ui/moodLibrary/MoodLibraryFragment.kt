@@ -198,8 +198,8 @@ class MoodLibraryFragment : Fragment() {
         } else {
             Toast.makeText(
                 requireContext(),
-                "Please install Spotify from google play.",
-                Toast.LENGTH_SHORT
+                "Please install Spotify from google play to open playlist.",
+                Toast.LENGTH_LONG
             ).show()
         }
     }
