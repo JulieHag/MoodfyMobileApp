@@ -12,6 +12,7 @@ class SessionManager (context: Context) {
     //shared preferences mode private as this means the created file can only be accessed by the calling application
     private var prefs: SharedPreferences = context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE)
 
+
     companion object{
         const val AUTH_TOKEN = "AUTH_TOKEN"
     }
@@ -31,6 +32,11 @@ class SessionManager (context: Context) {
      */
     fun fetchAuthToken(): String?{
         return prefs.getString(AUTH_TOKEN, null)
+    }
+
+    fun clearPrefs(){
+        prefs.edit().clear().apply()
+
     }
 
 

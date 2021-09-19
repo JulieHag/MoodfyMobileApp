@@ -1,8 +1,11 @@
 package com.jhag.moodapp
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -26,13 +29,26 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sessionManager: SessionManager
     val TAG = "MainActivity"
 
+    val positiveButtonClick = { _: DialogInterface, _: Int ->
+        spotifyAccess()
+
+    }
+
+    val negativeButtonClick = { _: DialogInterface, _: Int ->
+        Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         sessionManager = SessionManager(this)
+        sessionManager.clearPrefs()
+        Log.d(TAG, "${sessionManager.fetchAuthToken()}")
 
         val navView: BottomNavigationView = binding.navView
 
@@ -49,6 +65,16 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+
+        spotifyAccess()
+
+
+    }
+
+    /**
+     * Asks user for permission to access their spotify
+     */
+    fun spotifyAccess() {
 
         // code adapted from spotify authentication guide
         val builder = AuthenticationRequest.Builder(
@@ -69,7 +95,6 @@ class MainActivity : AppCompatActivity() {
         builder.setShowDialog(true)
         val request = builder.build()
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request)
-
 
 
     }
@@ -95,13 +120,15 @@ class MainActivity : AppCompatActivity() {
 
 
                 AuthenticationResponse.Type.ERROR -> {
-                    //handle error response - alert dialog
+                    //Unsuccessful auth i.e user presses cancel
                     Log.d(TAG, "Unsuccessful auth")
+                    loginPermissionAlert()
                 }
-                // Most likely auth flow was cancelled
+                // Most likely auth flow was cancelled i.e. back button pressed
                 else -> {
                     // Handle other cases
                     Log.d(TAG, "auth fow cancelled")
+                    loginPermissionAlert()
                 }
             }
 
@@ -112,6 +139,25 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
+
+    }
+
+
+    fun loginPermissionAlert() {
+
+
+        val builder = AlertDialog.Builder(this)
+        with(builder)
+        {
+            setTitle("Permission required")
+            setMessage("This app requires access to your Spotify account, without this the app will not function correctly. Press 'OK' to allow access.")
+            setPositiveButton(
+                "OK",
+                DialogInterface.OnClickListener(function = positiveButtonClick)
+            )
+            setNegativeButton("Cancel", negativeButtonClick)
+            show()
+        }
 
     }
 
