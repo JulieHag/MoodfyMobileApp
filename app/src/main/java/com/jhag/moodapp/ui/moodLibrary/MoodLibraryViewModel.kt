@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.jhag.moodapp.MoodfyApplication
 import com.jhag.moodapp.models.userPlaylists.UserPlaylistsResponse
 import com.jhag.moodapp.repository.SpotifyRepository
 import com.jhag.moodapp.utils.Resource
@@ -12,6 +13,11 @@ import com.jhag.moodapp.utils.SessionManager
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
+/**
+ * Require context for this viewmodel in order to access the session manager which is why it inherits
+ * from AndroidViewModel. Then we are able to access the applictaion context will stay alive as long as the application
+ * is alive, so it is safe to use.
+ */
 class MoodLibraryViewModel(
     val spotifyRepository: SpotifyRepository,
     application: Application
@@ -24,7 +30,8 @@ class MoodLibraryViewModel(
     }
     val text: LiveData<String> = _text
     val userPlaylist: MutableLiveData<Resource<UserPlaylistsResponse>> = MutableLiveData()
-    private var sessionManager: SessionManager = SessionManager(application.applicationContext)
+    //getApplication<MoodfyApplication>() so that android knows which application class we are referring to
+    private var sessionManager: SessionManager = SessionManager(getApplication<MoodfyApplication>().applicationContext)
 
     init {
 

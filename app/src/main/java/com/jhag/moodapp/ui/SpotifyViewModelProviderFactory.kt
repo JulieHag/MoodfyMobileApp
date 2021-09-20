@@ -10,7 +10,6 @@ class SpotifyViewModelProviderFactory(
     val spotifyRepository: SpotifyRepository,
     private val application: Application
 ): ViewModelProvider.Factory {
-   // sessionManager = SessionManager(applicationContext)
 
     /**
      * return new instance of view model and pass repository
