@@ -8,7 +8,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-
+import androidx.navigation.fragment.findNavController
+import com.jhag.moodapp.R
 import com.jhag.moodapp.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -36,6 +37,14 @@ class HomeFragment : Fragment() {
             textView.text = it
         })
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //sends user to homepage if they click the Moodfy logo
+        binding.imageMfIcon.setOnClickListener{
+            findNavController().navigate(R.id.action_navigation_home_to_navigation_mood_music)
+        }
     }
 
     override fun onDestroyView() {

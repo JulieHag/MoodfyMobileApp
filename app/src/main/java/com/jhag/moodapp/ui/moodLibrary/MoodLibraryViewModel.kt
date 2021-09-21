@@ -15,7 +15,7 @@ import retrofit2.Response
 
 /**
  * Require context for this viewmodel in order to access the session manager which is why it inherits
- * from AndroidViewModel. Then we are able to access the applictaion context will stay alive as long as the application
+ * from AndroidViewModel. Then we are able to access the application context which will stay alive as long as the application
  * is alive, so it is safe to use.
  */
 class MoodLibraryViewModel(
@@ -54,7 +54,7 @@ class MoodLibraryViewModel(
 
 
     /**
-     * Function to handle the response from the api call and will return the succesful or error response
+     * Function to handle the response from the api call and will return the successful or error response
      */
     private fun handlePlaylistResponse(response: Response<UserPlaylistsResponse>) : Resource<UserPlaylistsResponse>{
         if(response.isSuccessful){
