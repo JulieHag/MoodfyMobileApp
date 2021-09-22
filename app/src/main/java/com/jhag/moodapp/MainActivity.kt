@@ -66,10 +66,13 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
 
-        spotifyAccess()
+
+
 
 
     }
+
+
 
     /**
      * Asks user for permission to access their spotify
@@ -137,7 +140,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-
+        Log.d(TAG, "onStart: called")
+        if (sessionManager.fetchAuthToken() == null){
+            spotifyAccess()
+        }
 
     }
 

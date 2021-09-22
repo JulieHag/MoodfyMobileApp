@@ -348,7 +348,16 @@ class MoodIconService : LifecycleService() {
             }
 
 
-        } else {
+        } else if (trackResponse.code() == 401){
+            sessionManager.clearPrefs()
+            Toast.makeText(
+                applicationContext,
+                "Something went wrong. Try opening Moodfy then retry.",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+
+        else {
             Toast.makeText(
                 applicationContext,
                 "Can't add to playlist. Make sure music is playing in Spotify before clicking mood icon.",
