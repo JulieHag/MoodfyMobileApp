@@ -19,7 +19,7 @@
         <!-- LaunchMode set to 'singleTask' as it only allows one instance of the main activity to exist.
         Stops two instances of the same activity being created which can cause data to be lost -->
         <activity
-            android:name="com.jhag.moodapp.MainActivity"
+            android:name="com.jhag.moodapp.ui.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask">
             <intent-filter>

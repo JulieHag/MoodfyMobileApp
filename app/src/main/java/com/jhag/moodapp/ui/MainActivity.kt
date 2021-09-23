@@ -1,4 +1,4 @@
-package com.jhag.moodapp
+package com.jhag.moodapp.ui
 
 import android.content.DialogInterface
 import android.content.Intent
@@ -12,6 +12,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.jhag.moodapp.R
 import com.jhag.moodapp.databinding.ActivityMainBinding
 import com.jhag.moodapp.utils.Constants.Companion.CLIENT_ID
 import com.jhag.moodapp.utils.Constants.Companion.REDIRECT_URI
