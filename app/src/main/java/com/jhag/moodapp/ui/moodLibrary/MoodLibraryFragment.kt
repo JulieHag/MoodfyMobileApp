@@ -18,7 +18,6 @@ import com.jhag.moodapp.adapters.PlaylistAdapter
 import com.jhag.moodapp.databinding.FragmentMoodLibraryBinding
 import com.jhag.moodapp.models.userPlaylists.Item
 import com.jhag.moodapp.repository.SpotifyRepository
-import com.jhag.moodapp.ui.SpotifyViewModelProviderFactory
 import com.jhag.moodapp.utils.Constants.Companion.AMUSED_MF
 import com.jhag.moodapp.utils.Constants.Companion.ANGRY_MF
 import com.jhag.moodapp.utils.Constants.Companion.CALM_MF
@@ -52,7 +51,7 @@ class MoodLibraryFragment : Fragment() {
 
         val spotifyRepository = SpotifyRepository()
         val viewModelProviderFactory =
-            SpotifyViewModelProviderFactory(spotifyRepository, requireActivity().application)
+            MoodLibraryViewModelProviderFactory(spotifyRepository, requireActivity().application)
         moodLibraryViewModel =
             ViewModelProvider(this, viewModelProviderFactory).get(MoodLibraryViewModel::class.java)
 

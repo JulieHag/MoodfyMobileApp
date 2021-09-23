@@ -1,12 +1,11 @@
-package com.jhag.moodapp.ui
+package com.jhag.moodapp.ui.moodLibrary
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.jhag.moodapp.repository.SpotifyRepository
-import com.jhag.moodapp.ui.moodLibrary.MoodLibraryViewModel
 
-class SpotifyViewModelProviderFactory(
+class MoodLibraryViewModelProviderFactory(
     val spotifyRepository: SpotifyRepository,
     private val application: Application
 ): ViewModelProvider.Factory {
