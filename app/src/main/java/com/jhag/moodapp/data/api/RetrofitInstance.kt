@@ -10,6 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 /**
  * Code adapted from https://github.com/philipplackner/MVVMNewsApp/blob/Retrofit-setup/app/src/main/java/com/androiddevs/mvvmnewsapp/api/RetrofitInstance.kt
  * Retrofit singleton class which allows us to make requests from everywhere in code
+ * Lazy means that it will only be initialised once
  */
 class RetrofitInstance {
 
@@ -28,6 +29,7 @@ class RetrofitInstance {
                 .client(client)
                 .build()
         }
+        // api object that will be used to make requests
         val api by lazy {
             retrofit.create(SpotifyAPI::class.java)
         }

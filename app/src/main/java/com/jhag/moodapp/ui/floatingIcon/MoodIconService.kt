@@ -77,6 +77,7 @@ class MoodIconService : LifecycleService() {
         val layoutFlag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
         } else {
+            //for older phones
             WindowManager.LayoutParams.TYPE_PHONE
         }
 
