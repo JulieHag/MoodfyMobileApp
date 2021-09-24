@@ -1,4 +1,4 @@
-package com.jhag.moodapp.ui.moodLibrary
+package com.jhag.moodapp.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

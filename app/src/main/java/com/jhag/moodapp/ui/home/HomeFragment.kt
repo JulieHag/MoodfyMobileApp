@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.jhag.moodapp.R
 import com.jhag.moodapp.databinding.FragmentHomeBinding
+import com.jhag.moodapp.viewmodels.HomeViewModel
 
 class HomeFragment : Fragment() {
 

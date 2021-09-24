@@ -1,4 +1,4 @@
-package com.jhag.moodapp.ui.home
+package com.jhag.moodapp.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

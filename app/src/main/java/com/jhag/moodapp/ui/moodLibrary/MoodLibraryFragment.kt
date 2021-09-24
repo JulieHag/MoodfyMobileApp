@@ -29,6 +29,8 @@ import com.jhag.moodapp.utils.Constants.Companion.PRIDE_MF
 import com.jhag.moodapp.utils.Constants.Companion.SAD_MF
 import com.jhag.moodapp.utils.Constants.Companion.WONDER_MF
 import com.jhag.moodapp.utils.Resource
+import com.jhag.moodapp.viewmodels.MoodLibraryViewModel
+import com.jhag.moodapp.viewmodels.MoodLibraryViewModelProviderFactory
 
 
 class MoodLibraryFragment : Fragment() {

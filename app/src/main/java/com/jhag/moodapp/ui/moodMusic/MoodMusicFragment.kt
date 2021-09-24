@@ -18,6 +18,7 @@ import com.jhag.moodapp.databinding.FragmentMoodMusicBinding
 import com.jhag.moodapp.ui.floatingIcon.MoodIconService
 import com.jhag.moodapp.utils.Constants
 import com.jhag.moodapp.utils.SessionManager
+import com.jhag.moodapp.viewmodels.MoodMusicViewModel
 import com.spotify.sdk.android.authentication.AuthenticationClient
 import com.spotify.sdk.android.authentication.AuthenticationRequest
 import com.spotify.sdk.android.authentication.AuthenticationResponse
