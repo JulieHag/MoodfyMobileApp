@@ -18,7 +18,7 @@ import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import com.jhag.moodapp.R
-import com.jhag.moodapp.models.createPlaylistBody.CreatePlaylistBody
+import com.jhag.moodapp.data.models.createPlaylistBody.CreatePlaylistBody
 import com.jhag.moodapp.repository.SpotifyRepository
 import com.jhag.moodapp.utils.Constants.Companion.AMUSED_MF
 import com.jhag.moodapp.utils.Constants.Companion.ANGRY_MF

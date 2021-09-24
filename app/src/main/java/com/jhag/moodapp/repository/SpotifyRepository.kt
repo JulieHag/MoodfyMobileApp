@@ -1,7 +1,7 @@
 package com.jhag.moodapp.repository
 
 import com.jhag.moodapp.data.api.RetrofitInstance
-import com.jhag.moodapp.models.createPlaylistBody.CreatePlaylistBody
+import com.jhag.moodapp.data.models.createPlaylistBody.CreatePlaylistBody
 
 class SpotifyRepository {
 

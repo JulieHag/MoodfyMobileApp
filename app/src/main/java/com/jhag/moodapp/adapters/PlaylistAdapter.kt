@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jhag.moodapp.R
 import com.jhag.moodapp.databinding.PlaylistItemBinding
-import com.jhag.moodapp.models.userPlaylists.Item
+import com.jhag.moodapp.data.models.userPlaylists.Item
 import com.jhag.moodapp.utils.Constants.Companion.AMUSED_MF
 import com.jhag.moodapp.utils.Constants.Companion.ANGRY_MF
 import com.jhag.moodapp.utils.Constants.Companion.CALM_MF

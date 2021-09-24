@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jhag.moodapp.MoodfyApplication
-import com.jhag.moodapp.models.userPlaylists.UserPlaylistsResponse
+import com.jhag.moodapp.data.models.userPlaylists.UserPlaylistsResponse
 import com.jhag.moodapp.repository.SpotifyRepository
 import com.jhag.moodapp.utils.Resource
 import com.jhag.moodapp.utils.SessionManager

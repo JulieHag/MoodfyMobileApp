@@ -15,8 +15,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jhag.moodapp.adapters.PlaylistAdapter
+import com.jhag.moodapp.data.models.userPlaylists.Item
 import com.jhag.moodapp.databinding.FragmentMoodLibraryBinding
-import com.jhag.moodapp.models.userPlaylists.Item
 import com.jhag.moodapp.repository.SpotifyRepository
 import com.jhag.moodapp.utils.Constants.Companion.AMUSED_MF
 import com.jhag.moodapp.utils.Constants.Companion.ANGRY_MF

@@ -1,11 +1,11 @@
 package com.jhag.moodapp.data.api
 
-import com.jhag.moodapp.models.addSongToPlaylist.AddSongToPlaylistResponse
-import com.jhag.moodapp.models.createPlaylist.CreatePlaylistResponse
-import com.jhag.moodapp.models.createPlaylistBody.CreatePlaylistBody
-import com.jhag.moodapp.models.currentlyPlaying.CurrentTrackResponse
-import com.jhag.moodapp.models.userPlaylists.UserPlaylistsResponse
-import com.jhag.moodapp.models.userProfile.UserProfileResponse
+import com.jhag.moodapp.data.models.addSongToPlaylist.AddSongToPlaylistResponse
+import com.jhag.moodapp.data.models.createPlaylist.CreatePlaylistResponse
+import com.jhag.moodapp.data.models.createPlaylistBody.CreatePlaylistBody
+import com.jhag.moodapp.data.models.currentlyPlaying.CurrentTrackResponse
+import com.jhag.moodapp.data.models.userPlaylists.UserPlaylistsResponse
+import com.jhag.moodapp.data.models.userProfile.UserProfileResponse
 import retrofit2.Response
 import retrofit2.http.*
 
