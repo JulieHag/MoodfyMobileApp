@@ -3,7 +3,6 @@ package com.jhag.moodapp.ui
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -44,12 +43,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         sessionManager = SessionManager(this)
         sessionManager.clearPrefs()
-        Log.d(TAG, "${sessionManager.fetchAuthToken()}")
 
         val navView: BottomNavigationView = binding.navView
 
@@ -131,7 +128,7 @@ class MainActivity : AppCompatActivity() {
                 else -> {
                     // Handle other cases
                     //Log.d(TAG, "auth fow cancelled")
-                    loginPermissionAlert()
+                    loginInterruptAlert()
                 }
             }
 
@@ -141,7 +138,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        Log.d(TAG, "onStart: called")
         if (sessionManager.fetchAuthToken() == null){
             spotifyAccess()
         }
@@ -166,6 +162,25 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+    fun loginInterruptAlert() {
+
+
+        val builder = AlertDialog.Builder(this)
+        with(builder)
+        {
+            setTitle("Connection interrupted")
+            setMessage("Moodfy needs to connect to Spotify to function correctly. Press 'Retry' to try again.")
+            setPositiveButton(
+                "Retry",
+                DialogInterface.OnClickListener(function = positiveButtonClick)
+            )
+            setNegativeButton("Cancel", negativeButtonClick)
+            show()
+        }
+
+    }
+
 
 
 }
