@@ -44,7 +44,6 @@ import java.io.IOException
  * Made service foreground service so that it can't be killed by android system
  * extends LifecycleService to have access to lifecycleScope which is used to start coroutines
  * that will automatically be cancelled when the Service is stopped (for network calls).
- * Code for floating icon funtionality is adapted from https://drive.google.com/file/d/1fY9r9uNZ9JYcbFWInI3ivmOyZEsMURG_/view
  */
 
 class MoodIconService : LifecycleService() {
@@ -73,14 +72,12 @@ class MoodIconService : LifecycleService() {
 
         startForegroundService()
 
-
         val layoutFlag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
         } else {
             //for older phones
             WindowManager.LayoutParams.TYPE_PHONE
         }
-
         params = WindowManager.LayoutParams(
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.WRAP_CONTENT,
@@ -88,13 +85,10 @@ class MoodIconService : LifecycleService() {
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
             PixelFormat.TRANSLUCENT
         )
-
         //specify the view position
         params.gravity = Gravity.TOP or Gravity.START
-
         params.x = 0
         params.y = 100
-
         //add the view to the window
         windowManager.addView(floatingView, params)
 
@@ -105,16 +99,12 @@ class MoodIconService : LifecycleService() {
 
         val showMfIcon = floatingView.findViewById<View>(R.id.mf_icon_container)
 
-
         showMfIcon.setOnTouchListener(object : View.OnTouchListener {
-
 
             private var initialX = 0
             private var initialY = 0
             private var initialTouchX = 0.0f
             private var initialTouchY = 0.0f
-
-
 
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
                 when (event!!.action) {
@@ -131,9 +121,7 @@ class MoodIconService : LifecycleService() {
 
                         //Click event, must check  for Xdiff<10 && Ydiff<10 as sometimes the icon may move a little when clicking
                         //Will show user the mood option tags
-
                         if (xDiff < 10 && yDiff < 10) {
-
                             showMoodTags()
                             val moodTagsMinBtn =
                                 floatingView.findViewById<ImageView>(R.id.mood_tag_min_btn)
@@ -142,13 +130,9 @@ class MoodIconService : LifecycleService() {
                             moodTagsMinBtn.setOnClickListener {
                                 showMfIcon()
                             }
-
                             windowManager.updateViewLayout(floatingView, params)
-
-
                         }
                     }
-
 
                     MotionEvent.ACTION_MOVE -> {
                         params.x = initialX + (event.rawX - initialTouchX).toInt()
@@ -158,13 +142,9 @@ class MoodIconService : LifecycleService() {
                         windowManager.updateViewLayout(floatingView, params)
                     }
                 }
-
                 return true
             }
-
-
         })
-
     }
 
 
@@ -184,7 +164,7 @@ class MoodIconService : LifecycleService() {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE)
                 as NotificationManager
 
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel(notificationManager)
         }
 
@@ -245,68 +225,66 @@ class MoodIconService : LifecycleService() {
         mfIcon.visibility = View.GONE
 
         //set onClick listeners for the mood tags
-        val mood1 = floatingView.findViewById<Button>(R.id.mood_1)
-        val mood2 = floatingView.findViewById<Button>(R.id.mood_2)
-        val mood3 = floatingView.findViewById<Button>(R.id.mood_3)
-        val mood4 = floatingView.findViewById<Button>(R.id.mood_4)
-        val mood5 = floatingView.findViewById<Button>(R.id.mood_5)
-        val mood6 = floatingView.findViewById<Button>(R.id.mood_6)
-        val mood7 = floatingView.findViewById<Button>(R.id.mood_7)
-        val mood8 = floatingView.findViewById<Button>(R.id.mood_8)
-        val mood9 = floatingView.findViewById<Button>(R.id.mood_9)
-        val mood10 = floatingView.findViewById<Button>(R.id.mood_10)
+        val moodHappy = floatingView.findViewById<Button>(R.id.mood_happy)
+        val moodSad = floatingView.findViewById<Button>(R.id.mood_sad)
+        val moodPride = floatingView.findViewById<Button>(R.id.mood_pride)
+        val moodCalm = floatingView.findViewById<Button>(R.id.mood_calm)
+        val moodExcited = floatingView.findViewById<Button>(R.id.mood_excited)
+        val moodLove = floatingView.findViewById<Button>(R.id.mood_love)
+        val moodAngry = floatingView.findViewById<Button>(R.id.mood_angry)
+        val moodNostalgic = floatingView.findViewById<Button>(R.id.mood_nostalgic)
+        val moodWonder = floatingView.findViewById<Button>(R.id.mood_wonder)
+        val moodAmused = floatingView.findViewById<Button>(R.id.mood_amused)
 
 
-        mood1.setOnClickListener {
+        moodHappy.setOnClickListener {
             playlistName = HAPPY_MF
             getCurrentTrack("Bearer ${sessionManager.fetchAuthToken()}", "GB")
-
         }
 
-        mood2.setOnClickListener {
+        moodSad.setOnClickListener {
             playlistName = SAD_MF
             getCurrentTrack("Bearer ${sessionManager.fetchAuthToken()}", "GB")
         }
 
-        mood3.setOnClickListener {
+        moodPride.setOnClickListener {
             playlistName = PRIDE_MF
             getCurrentTrack("Bearer ${sessionManager.fetchAuthToken()}", "GB")
         }
-        mood4.setOnClickListener {
+        moodCalm.setOnClickListener {
             playlistName = CALM_MF
             getCurrentTrack("Bearer ${sessionManager.fetchAuthToken()}", "GB")
         }
 
-        mood5.setOnClickListener {
+        moodExcited.setOnClickListener {
             playlistName = EXCITED_MF
             getCurrentTrack("Bearer ${sessionManager.fetchAuthToken()}", "GB")
         }
 
-        mood6.setOnClickListener {
+        moodLove.setOnClickListener {
             playlistName = LOVE_MF
             getCurrentTrack("Bearer ${sessionManager.fetchAuthToken()}", "GB")
         }
 
-        mood7.setOnClickListener {
+        moodAngry.setOnClickListener {
             playlistName = ANGRY_MF
             getCurrentTrack("Bearer ${sessionManager.fetchAuthToken()}", "GB")
         }
 
-        mood8.setOnClickListener {
+        moodNostalgic.setOnClickListener {
             playlistName = NOSTALGIC_MF
             getCurrentTrack("Bearer ${sessionManager.fetchAuthToken()}", "GB")
         }
 
-        mood9.setOnClickListener {
+        moodWonder.setOnClickListener {
             playlistName = WONDER_MF
             getCurrentTrack("Bearer ${sessionManager.fetchAuthToken()}", "GB")
         }
 
-        mood10.setOnClickListener {
+        moodAmused.setOnClickListener {
             playlistName = AMUSED_MF
             getCurrentTrack("Bearer ${sessionManager.fetchAuthToken()}", "GB")
         }
-
 
     }
 
@@ -318,12 +296,17 @@ class MoodIconService : LifecycleService() {
      */
     private fun getCurrentTrack(token: String, marketCode: String) = lifecycleScope.launch {
         var isPlaying: Boolean
-
         val trackResponse = try {
-            // Because getCurrentTrack is a suspend function in SpotifyAPI, code will only continue once current track has been retrieved from api
+            // Because getCurrentTrack is a suspend function in SpotifyAPI,
+                // code will only continue once current track has been retrieved from api
             spotifyRepository.getCurrentTrack(token, marketCode)
         } catch (e: IOException) {
             Log.e(TAG, "IOException, you may not have internet connection")
+            Toast.makeText(
+                applicationContext,
+                "Error. Check internet connection",
+                Toast.LENGTH_LONG
+            ).show()
             return@launch
         } catch (e: HttpException) {
             Log.e(TAG, "HttpException, unexpected response")
@@ -347,18 +330,14 @@ class MoodIconService : LifecycleService() {
                     Toast.LENGTH_LONG
                 ).show()
             }
-
-
-        } else if (trackResponse.code() == 401){
+        } else if (trackResponse.code() == 401) {
             sessionManager.clearPrefs()
             Toast.makeText(
                 applicationContext,
                 "Something went wrong. Try opening Moodfy then retry.",
                 Toast.LENGTH_LONG
             ).show()
-        }
-
-        else {
+        } else {
             Toast.makeText(
                 applicationContext,
                 "Can't add to playlist. Make sure music is playing in Spotify before clicking mood icon.",
@@ -528,7 +507,6 @@ class MoodIconService : LifecycleService() {
                 Log.e(TAG, "Response not successful")
             }
         }
-
 
 
 }

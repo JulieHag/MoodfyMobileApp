@@ -44,17 +44,15 @@ class MoodMusicFragment : Fragment() {
                 startActivity(intent)
             }
         }
-
-
     }
 
-    val positiveButtonClick2= { _: DialogInterface, _: Int ->
+    val positiveButtonClick2 = { _: DialogInterface, _: Int ->
 
         spotifyAccess()
     }
 
     val negativeButtonClick = { _: DialogInterface, _: Int ->
-        Toast.makeText(requireContext(),"Permission denied", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show()
 
     }
 
@@ -80,8 +78,6 @@ class MoodMusicFragment : Fragment() {
             //requestPermissions()
         })
         return root
-
-
 
 
     }
@@ -111,11 +107,9 @@ class MoodMusicFragment : Fragment() {
         var intent: Intent? = null
         sessionManager = SessionManager(requireContext())
 
-
-
-        if(sessionManager.fetchAuthToken() == null){
-           spotifyAccessAlert()
-        } else{
+        if (sessionManager.fetchAuthToken() == null) {
+            spotifyAccessAlert()
+        } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
                 canDraw = Settings.canDrawOverlays(requireContext())
@@ -125,12 +119,8 @@ class MoodMusicFragment : Fragment() {
                 } else {
                     requireActivity().startService(Intent(context, MoodIconService::class.java))
                 }
+            }
         }
-
-
-        }
-
-
     }
 
 
@@ -140,11 +130,8 @@ class MoodMusicFragment : Fragment() {
     }
 
 
-
-
     /**
      * Code to show user alert informing them that they need to allow overlay permissions
-     * code adapted from https://www.journaldev.com/309/android-alert-dialog-using-kotlin
      */
     fun permissionAlert() {
 

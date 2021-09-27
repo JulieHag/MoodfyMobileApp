@@ -18,6 +18,8 @@ import com.jhag.moodapp.adapters.PlaylistAdapter
 import com.jhag.moodapp.data.models.userPlaylists.Item
 import com.jhag.moodapp.databinding.FragmentMoodLibraryBinding
 import com.jhag.moodapp.repository.SpotifyRepository
+import com.jhag.moodapp.ui.viewmodels.MoodLibraryViewModel
+import com.jhag.moodapp.ui.viewmodels.MoodLibraryViewModelProviderFactory
 import com.jhag.moodapp.utils.Constants.Companion.AMUSED_MF
 import com.jhag.moodapp.utils.Constants.Companion.ANGRY_MF
 import com.jhag.moodapp.utils.Constants.Companion.CALM_MF
@@ -29,8 +31,6 @@ import com.jhag.moodapp.utils.Constants.Companion.PRIDE_MF
 import com.jhag.moodapp.utils.Constants.Companion.SAD_MF
 import com.jhag.moodapp.utils.Constants.Companion.WONDER_MF
 import com.jhag.moodapp.utils.Resource
-import com.jhag.moodapp.ui.viewmodels.MoodLibraryViewModel
-import com.jhag.moodapp.ui.viewmodels.MoodLibraryViewModelProviderFactory
 
 
 class MoodLibraryFragment : Fragment() {
@@ -82,6 +82,20 @@ class MoodLibraryFragment : Fragment() {
             var playlistUri = it.uri
             linkToSpotify(playlistUri)
         }
+
+        moodLibraryViewModel.errorStatus.observe(viewLifecycleOwner, Observer { errorStat  ->
+
+            errorStat?.let {
+                hideProgressBar()
+                moodLibraryViewModel.errorStatus.value = null
+                Toast.makeText(
+                    context,
+                    "Error. Check internet connection",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
+        })
 
         moodLibraryViewModel.userPlaylist.observe(viewLifecycleOwner, Observer { playlistResponse ->
             when (playlistResponse) {

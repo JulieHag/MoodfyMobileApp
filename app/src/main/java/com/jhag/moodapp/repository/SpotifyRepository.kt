@@ -5,8 +5,6 @@ import com.jhag.moodapp.data.models.createPlaylistBody.CreatePlaylistBody
 
 class SpotifyRepository {
 
-
-
     //querying spotify api to get currently playing track
     suspend fun getCurrentTrack(token: String, marketCode: String) =
         RetrofitInstance.api.getCurrentTrack(token, marketCode)
@@ -26,6 +24,5 @@ class SpotifyRepository {
     // Creates a new playlist
     suspend fun createUserPlaylist(token: String, userId: String, createPlaylistBody: CreatePlaylistBody) =
         RetrofitInstance.api.createUserPlaylist(token, userId, createPlaylistBody )
-
 
 }

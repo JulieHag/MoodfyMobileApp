@@ -14,7 +14,6 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 class RetrofitInstance {
 
-
     companion object {
 
         private val retrofit by lazy {
@@ -33,23 +32,5 @@ class RetrofitInstance {
         val api by lazy {
             retrofit.create(SpotifyAPI::class.java)
         }
-
-
-
     }
-
-
-
 }
-
-/**
-//Initialise OkhttpClient with our interceptors
-
-private fun okhttpClient(context: Context): OkHttpClient {
-val logging = HttpLoggingInterceptor()
-logging.setLevel(HttpLoggingInterceptor.Level.BODY)
-return OkHttpClient.Builder()
-.addInterceptor(AuthInterceptor(context))
-.addInterceptor(logging)
-.build()
-}**/
