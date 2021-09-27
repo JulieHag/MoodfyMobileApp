@@ -12,7 +12,7 @@ class SessionManager (context: Context) {
     //shared preferences mode private as this means the created file can only be accessed by the calling application
     private var prefs: SharedPreferences = context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE)
 
-
+    // singleton object whose properties and functions are tied to a class but not to the instance of that class
     companion object{
         const val AUTH_TOKEN = "AUTH_TOKEN"
     }
@@ -34,10 +34,10 @@ class SessionManager (context: Context) {
         return prefs.getString(AUTH_TOKEN, null)
     }
 
+    /**
+     * Function to clear the preferences
+     */
     fun clearPrefs(){
         prefs.edit().clear().apply()
-
     }
-
-
 }

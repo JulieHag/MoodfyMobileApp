@@ -22,8 +22,6 @@ interface SpotifyAPI {
         token: String,
         @Query("market")
         marketCode: String = "GB",
-
-
         ): Response<CurrentTrackResponse>
 
     // Get request which returns the current user's playlists
@@ -60,7 +58,5 @@ interface SpotifyAPI {
         userId: String,
         @Body createPlaylistBody: CreatePlaylistBody
     ): Response<CreatePlaylistResponse>
-
-
 
 }

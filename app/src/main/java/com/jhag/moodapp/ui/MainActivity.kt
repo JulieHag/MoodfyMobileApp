@@ -31,12 +31,10 @@ class MainActivity : AppCompatActivity() {
 
     val positiveButtonClick = { _: DialogInterface, _: Int ->
         spotifyAccess()
-
     }
 
     val negativeButtonClick = { _: DialogInterface, _: Int ->
         Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
-
     }
 
 
@@ -96,8 +94,6 @@ class MainActivity : AppCompatActivity() {
         builder.setShowDialog(true)
         val request = builder.build()
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request)
-
-
     }
 
 
@@ -118,20 +114,16 @@ class MainActivity : AppCompatActivity() {
 
                 }
 
-
                 AuthenticationResponse.Type.ERROR -> {
                     //Unsuccessful auth i.e user presses cancel
-                    //Log.d(TAG, "Unsuccessful auth")
                     loginPermissionAlert()
                 }
                 // Most likely auth flow was cancelled i.e. back button pressed
                 else -> {
                     // Handle other cases
-                    //Log.d(TAG, "auth fow cancelled")
                     loginInterruptAlert()
                 }
             }
-
         }
     }
 
@@ -145,14 +137,15 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun loginPermissionAlert() {
 
+    fun loginPermissionAlert() {
 
         val builder = AlertDialog.Builder(this)
         with(builder)
         {
             setTitle("Permission required")
-            setMessage("This app requires access to your Spotify account, without this the app will not function correctly. Press 'OK' to allow access.")
+            setMessage("This app requires access to your Spotify account, without this the app will not " +
+                    "function correctly. Press 'OK' to allow access.")
             setPositiveButton(
                 "OK",
                 DialogInterface.OnClickListener(function = positiveButtonClick)
@@ -160,7 +153,6 @@ class MainActivity : AppCompatActivity() {
             setNegativeButton("Cancel", negativeButtonClick)
             show()
         }
-
     }
 
     fun loginInterruptAlert() {
