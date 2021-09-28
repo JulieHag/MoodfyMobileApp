@@ -116,6 +116,10 @@ class MoodLibraryFragment : Fragment() {
                         }
                         playlistAdapter.differ.submitList(moodPlaylist)
 
+                        /**
+                         * Shows message in textview if the user doesn't have any saved playlists
+                         * yet. It will disappear as soon as the user creates a moodfy playlist.
+                         */
                         if (moodPlaylist.isEmpty()) {
                             moodLibraryViewModel.text.observe(viewLifecycleOwner, Observer {
                                 textView.text = it
@@ -140,20 +144,10 @@ class MoodLibraryFragment : Fragment() {
             }
 
 
-
-
         })
-
-        /**
-         * Shows message in textview if the user doesn't have any saved playlists
-         * yet. It will disappear as soon as the user creates a moodfy playlist.
-         */
-
-
 
 
     }
-
 
     /**
      * Function to show progress bar
@@ -172,7 +166,6 @@ class MoodLibraryFragment : Fragment() {
 //onclick listener for btn
 //binding.goToSpotify.setOnClickListener {linkToSpotify()}
 
-
     /**
      * Function to set up recycler view
      */
@@ -185,14 +178,14 @@ class MoodLibraryFragment : Fragment() {
 
     }
 
+    /**
+     * Code adapted from spotify developeent guides. Found at:
+     * https://developer.spotify.com/documentation/general/guides/content-linking-guide/
+     * Checks if spotify app is installed on device.
+     * If it is then the user will be sent to spotify app by using the Uri passed from the on click
+     *  listener. This will send the user to that specific mood playlist on spotify.
+     */
     fun linkToSpotify(playlistUri: String) {
-        /**
-         * Code adapted from spotify developeent guides. Found at:
-         * https://developer.spotify.com/documentation/general/guides/content-linking-guide/
-         * Checks if spotify app is installed on device.
-         * If it is then the user will be sent to spotify app by using the Uri passed from the on click
-         *  listener. This will send the user to that specific mood playlist on spotify.
-         */
 
         val pm: PackageManager = context?.packageManager!!
         val isSpotifyInstalled: Boolean = try {
@@ -201,7 +194,6 @@ class MoodLibraryFragment : Fragment() {
         } catch (e: PackageManager.NameNotFoundException) {
             false
         }
-
         if (isSpotifyInstalled) {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(playlistUri)

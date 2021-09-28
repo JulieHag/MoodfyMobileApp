@@ -312,7 +312,6 @@ class MoodIconService : LifecycleService() {
             Log.e(TAG, "HttpException, unexpected response")
             return@launch
         }
-
         //successful response and the body is not null
         if (trackResponse.isSuccessful && trackResponse.body() != null) {
             //check that is playing a track or podcast etc, not an advert
@@ -374,14 +373,12 @@ class MoodIconService : LifecycleService() {
         if (playlistResponse.isSuccessful && playlistResponse.body() != null) {
             val items = playlistResponse.body()!!.items
             for (item in items) {
-                //Log.d(TAG, "${item.name}")
 
                 if (item.name == playlistName) {
                     havePlaylist = true
                     playlistId = item.id
                 }
             }
-
             if (havePlaylist) {
 
                 // post currently playing song to playlist
@@ -391,11 +388,9 @@ class MoodIconService : LifecycleService() {
                     trackUri
                 )
             } else {
-
-
-                // User doesn't have mood playlist created yet. Have to get user id and then create a new playlist with current song being added to it
+                // User doesn't have mood playlist created yet. Have to get user id and then create
+                    // a new playlist with current song being added to it
                 getUserProfile("Bearer ${sessionManager.fetchAuthToken()}")
-
 
                 delay(500L)
                 createUserPlaylist(
@@ -403,7 +398,6 @@ class MoodIconService : LifecycleService() {
                     userId,
                     CreatePlaylistBody("Your $playlistName playlist", playlistName)
                 )
-
                 //get current track
                 // Delay to wait for playlistId to be instantiated in createUserPlaylist
                 delay(500L)
@@ -414,9 +408,7 @@ class MoodIconService : LifecycleService() {
                     playlistId,
                     trackUri
                 )
-
             }
-
 
         } else {
             Log.e(TAG, "Response not successful")
@@ -455,7 +447,7 @@ class MoodIconService : LifecycleService() {
 
     /**
      * Function which queries Spotify API for the current user's profile.
-     * On successfull response, the userId is retrieved and saved to var. This
+     * On successful response, the userId is retrieved and saved to var. This
      * is required in order to create a user playlist.
      */
     private fun getUserProfile(token: String) = lifecycleScope.launch {
@@ -498,7 +490,6 @@ class MoodIconService : LifecycleService() {
                 Log.e(TAG, "HttpException, unexpected response")
                 return@launch
             }
-
             if (createPlaylistResponse.isSuccessful && createPlaylistResponse.body() != null) {
                 playlistId = createPlaylistResponse.body()!!.id
 
@@ -507,7 +498,6 @@ class MoodIconService : LifecycleService() {
                 Log.e(TAG, "Response not successful")
             }
         }
-
 
 }
 

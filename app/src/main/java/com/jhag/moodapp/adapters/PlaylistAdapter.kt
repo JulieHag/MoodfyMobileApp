@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jhag.moodapp.R
-import com.jhag.moodapp.databinding.PlaylistItemBinding
 import com.jhag.moodapp.data.models.userPlaylists.Item
+import com.jhag.moodapp.databinding.PlaylistItemBinding
 import com.jhag.moodapp.utils.Constants.Companion.AMUSED_MF
 import com.jhag.moodapp.utils.Constants.Companion.ANGRY_MF
 import com.jhag.moodapp.utils.Constants.Companion.CALM_MF
@@ -29,12 +29,10 @@ class PlaylistAdapter: RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder>(
     inner class PlaylistViewHolder(val binding: PlaylistItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     private val differCallback = object : DiffUtil.ItemCallback<Item>(){
-
         //checks if 2 Items passed to this function are the same (looking at playlist id)
         override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
             return oldItem.id == newItem.id
         }
-
         //compares the contents of old item and new item are the same
         override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
             return oldItem == newItem
@@ -81,14 +79,12 @@ class PlaylistAdapter: RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder>(
                 CALM_MF -> (itemImage.setImageResource(R.drawable.calm))
                 LOVE_MF -> (itemImage.setImageResource(R.drawable.love))
             }
-
             itemTitle.text = playlistItem.name
             playlistUri = playlistItem.uri
             holder.itemView.setOnClickListener{
                 onItemClickListener?.let { it(playlistItem) }
             }
         }
-
     }
 
     /**
@@ -102,8 +98,5 @@ class PlaylistAdapter: RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder>(
     fun setOnItemClickListener(listener: (Item) -> Unit){
         onItemClickListener = listener
     }
-
-
-
 
 }

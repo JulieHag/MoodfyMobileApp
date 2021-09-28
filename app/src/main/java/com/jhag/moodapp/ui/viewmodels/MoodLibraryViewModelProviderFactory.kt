@@ -5,6 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.jhag.moodapp.repository.SpotifyRepository
 
+/**
+ * Needed so that the MoodLibraryViewModel can have a constructor
+ */
+
 class MoodLibraryViewModelProviderFactory(
     val spotifyRepository: SpotifyRepository,
     private val application: Application
