@@ -21,6 +21,9 @@ import com.spotify.sdk.android.authentication.AuthenticationClient
 import com.spotify.sdk.android.authentication.AuthenticationRequest
 import com.spotify.sdk.android.authentication.AuthenticationResponse
 
+/**
+ * Main activity which hosts the fragments
+ */
 
 class MainActivity : AppCompatActivity() {
 
