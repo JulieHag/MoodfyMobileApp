@@ -1,5 +1,6 @@
 package com.jhag.moodapp.ui.moodLibrary
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -20,6 +22,7 @@ import com.jhag.moodapp.databinding.FragmentMoodLibraryBinding
 import com.jhag.moodapp.repository.SpotifyRepository
 import com.jhag.moodapp.ui.viewmodels.MoodLibraryViewModel
 import com.jhag.moodapp.ui.viewmodels.MoodLibraryViewModelProviderFactory
+import com.jhag.moodapp.utils.Constants
 import com.jhag.moodapp.utils.Constants.Companion.AMUSED_MF
 import com.jhag.moodapp.utils.Constants.Companion.ANGRY_MF
 import com.jhag.moodapp.utils.Constants.Companion.CALM_MF
@@ -31,6 +34,10 @@ import com.jhag.moodapp.utils.Constants.Companion.PRIDE_MF
 import com.jhag.moodapp.utils.Constants.Companion.SAD_MF
 import com.jhag.moodapp.utils.Constants.Companion.WONDER_MF
 import com.jhag.moodapp.utils.Resource
+import com.jhag.moodapp.utils.SessionManager
+import com.spotify.sdk.android.authentication.AuthenticationClient
+import com.spotify.sdk.android.authentication.AuthenticationRequest
+import com.spotify.sdk.android.authentication.AuthenticationResponse
 
 
 class MoodLibraryFragment : Fragment() {
@@ -38,6 +45,18 @@ class MoodLibraryFragment : Fragment() {
     private lateinit var moodLibraryViewModel: MoodLibraryViewModel
     lateinit var playlistAdapter: PlaylistAdapter
     private var _binding: FragmentMoodLibraryBinding? = null
+    private lateinit var sessionManager: SessionManager
+
+    val positiveButtonClick = { _: DialogInterface, _: Int ->
+
+        spotifyAccess()
+    }
+
+    val negativeButtonClick = { _: DialogInterface, _: Int ->
+        Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show()
+        hideProgressBar()
+
+    }
 
 
     // This property is only valid between onCreateView and
@@ -71,6 +90,11 @@ class MoodLibraryFragment : Fragment() {
 
         val moodPlaylist = mutableListOf<Item>()
         val textView: TextView = binding.textMoodLibrary
+        sessionManager = SessionManager(requireContext())
+
+        if (sessionManager.fetchAuthToken() == null) {
+            spotifyLibraryAccessAlert()
+        }
 
 
         /**
@@ -83,7 +107,7 @@ class MoodLibraryFragment : Fragment() {
             linkToSpotify(playlistUri)
         }
 
-        moodLibraryViewModel.errorStatus.observe(viewLifecycleOwner, Observer { errorStat  ->
+        moodLibraryViewModel.errorStatus.observe(viewLifecycleOwner, Observer { errorStat ->
 
             errorStat?.let {
                 hideProgressBar()
@@ -214,6 +238,49 @@ class MoodLibraryFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun spotifyLibraryAccessAlert() {
+        val builder = AlertDialog.Builder(requireContext())
+        with(builder)
+        {
+            setTitle("Permission required")
+            setMessage("To use this feature of the app you must allow the app access to your Spotify account. Click OK to allow access.")
+            setPositiveButton(
+                "OK",
+                DialogInterface.OnClickListener(function = positiveButtonClick)
+            )
+            setNegativeButton("Cancel", negativeButtonClick)
+            show()
+        }
+    }
+
+    /**
+     * Asks user for permission to access their spotify
+     */
+    fun spotifyAccess() {
+
+        // code adapted from spotify authentication guide
+        val builder = AuthenticationRequest.Builder(
+            Constants.CLIENT_ID,
+            AuthenticationResponse.Type.TOKEN,
+            Constants.REDIRECT_URI
+        )
+        builder.setScopes(
+            arrayOf(
+                "user-read-currently-playing",
+                "user-read-playback-state",
+                "playlist-modify-public",
+                "playlist-modify-private",
+                "ugc-image-upload"
+            )
+        )
+        //to give user chance to log out
+        builder.setShowDialog(true)
+        val request = builder.build()
+        AuthenticationClient.openLoginActivity(requireActivity(), Constants.REQUEST_CODE, request)
+
+
     }
 
 
