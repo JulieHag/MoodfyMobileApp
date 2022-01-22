@@ -155,6 +155,7 @@ class MoodLibraryFragment : Fragment() {
                     }
                 }
                 is Resource.Error -> {
+                    sessionManager.clearPrefs()
                     playlistResponse.message?.let { message ->
                         Log.e(TAG, "An error has occurred: $message")
                     }
