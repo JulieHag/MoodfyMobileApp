@@ -8,12 +8,12 @@ OTHER FEATURES
 Works with both Spotify Free and Spotify Premium accounts.
 You don’t need to be listening to Spotify on your phone to use Moodfy, as long as you are playing music from one of your devices while using the app (e.g., laptop, tablet, iPad, etc).
 
-##Getting Started
-###Clone the Repository 
+## Getting Started
+### Clone the Repository 
 Clone the repository to your local machine and run the app in an emulator or on an Android device in debug mode.
 
-###Prerequisites 
+### Prerequisites 
 The app is still in development mode. In order for app to gain access to Spotify's API, potential users must provide me with their Spotify email so they can be granted access.
 
-##App screenshots
+## App screenshots
 ![Image 1](file:///Users/juliehagan/Downloads/googlePlay1.jpeg)
