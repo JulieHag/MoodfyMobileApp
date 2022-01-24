@@ -16,3 +16,6 @@ Clone the repository to your local machine and run the app in an emulator or on 
 
 ### Prerequisites 
 The app is currently in development mode. In order for the app to gain access to Spotify's API, potential users must provide me with their Spotify email so they can be granted access.
+
+## App Screenshots 
+![Playstore doc2](https://user-images.githubusercontent.com/98126422/150873709-bfa5005c-0d1a-4290-99bc-533bc94bc08f.jpg)
