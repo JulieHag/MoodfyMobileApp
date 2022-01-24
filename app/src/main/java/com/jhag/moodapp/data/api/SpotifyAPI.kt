@@ -16,7 +16,7 @@ interface SpotifyAPI {
 
     // Get request to see what the user is currently playing
     @GET("v1/me/player/currently-playing")
-    //want to execute function asynchronously using coroutines
+    //function executed asynchronously using coroutines
     suspend fun getCurrentTrack(
         @Header("Authorization")
         token: String,
