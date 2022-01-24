@@ -6,7 +6,7 @@ You can listen to Spotify just like you always do and if a song arises which mak
 Then with a simple click on the chosen mood tag, Moodfy will take care of the rest of the process for you. If the mood playlist hasn’t been created yet, then it will be automatically created for you and the song added to it. The playlist will be saved onto Spotify itself, but it will also be stored inside the Moodfy app. This means that you will never lose track of your mood playlists under the sheer number of playlists that your Spotify library can acquire.
 To get started, simply allow the app access to your Spotify account and then tap the button in ‘Mood Music’ to start Moodfying your music.
 
-OTHER FEATURES
+### Other Features
 Works with both Spotify Free and Spotify Premium accounts.
 You don’t need to be listening to Spotify on your phone to use Moodfy, as long as you are playing music from one of your devices while using the app (e.g., laptop, tablet, iPad, etc).
 
