@@ -16,6 +16,3 @@ Clone the repository to your local machine and run the app in an emulator or on 
 
 ### Prerequisites 
 The app is currently in development mode. In order for the app to gain access to Spotify's API, potential users must provide me with their Spotify email so they can be granted access.
-
-## App screenshots
-![Image 1](https://cvws.icloud-content.com/B/AaxqQ6CDWnrOFg4r2Ewg802YaYXmAUOTh1R4ujMr38BbUhoiPheBeOSV/Playstore+doc2.jpg?o=AokvymQHVqa2QlJHIUxgdFg-F6pMvItyuSJm2AkBjgwl&v=1&x=3&a=CAogcBFxAKMqrkPODSbdhaRct60WEwqYD6JWW7rSkLihDBgSbxCJ6P7v6C8Yqd-18OgvIgEAUgSYaYXmWgSBeOSVaichT05bap-1J9jHsZzI5wVfOYK1NqFPtd7C9lVKtcwa93HlTWbHtwlyJ-6ApCs9IjtKXe2Hcbk00FD-wTgKDSltUzC4oeHNYaNJZSIktZkMSQ&e=1643060752&fl=&r=57a96f72-6ba9-4b44-ba69-454635cdcabb-1&k=9OXCJ6uTxxX-Xp27J-1U7w&ckc=com.apple.clouddocs&ckz=com.apple.CloudDocs&p=40&s=wfkrBs70xxIjXez3XnrxgGzpG9w&cd=i)
